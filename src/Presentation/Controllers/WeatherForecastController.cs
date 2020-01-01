@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Presentation.Controllers
+namespace Maktub.Presentation.Controllers
 {
     [Authorize]
     [ApiController]

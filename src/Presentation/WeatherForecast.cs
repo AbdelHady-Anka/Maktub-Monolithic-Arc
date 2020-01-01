@@ -1,6 +1,6 @@
 using System;
 
-namespace Presentation
+namespace Maktub.Presentation
 {
     public class WeatherForecast
     {

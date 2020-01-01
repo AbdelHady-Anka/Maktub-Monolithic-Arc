@@ -1,6 +1,6 @@
 dotnet new sln -n Maktub
 
-REM dotnet "new" "webapi" "-lang" "C#" "-n" "Maktub.Presentation" "-o" "src\Presentation"
+REM dotnet "new" "angular" "--auth" "Individual" "-lang" "C#" "-n" "Maktub.Presentation" "-o" "src\Presentation"
 REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.CrossCuttingConcerns" "-o" "src\CrossCuttingConcerns"
 REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.Domain" "-o" "src\Domain"
 REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.Infrastructure" "-o" "src\Infrastructure"

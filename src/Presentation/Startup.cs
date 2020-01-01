@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using Presentation.Data;
-using Presentation.Models;
+using Maktub.Presentation.Data;
+using Maktub.Presentation.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Presentation
+namespace Maktub.Presentation
 {
     public class Startup
     {

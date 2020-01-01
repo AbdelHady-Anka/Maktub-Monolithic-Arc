@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Presentation.Controllers
+namespace Maktub.Presentation.Controllers
 {
     public class OidcConfigurationController : Controller
     {

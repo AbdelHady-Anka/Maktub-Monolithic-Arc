@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Presentation.Data.Migrations
+namespace Maktub.Presentation.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
