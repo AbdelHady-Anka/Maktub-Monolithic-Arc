@@ -29,11 +29,8 @@ namespace Maktub.Presentation
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            var bytes = System.IO.File.ReadAllBytes("/var/ssl/private/674BD707D6798F29E4E39E61840A039C3A80EEFA.p12");
-            var cert = new X509Certificate2(bytes);
+                
             services.AddIdentityServer()
-                .AddSigningCredential(cert)
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
