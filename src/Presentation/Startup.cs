@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography.X509Certificates;
+using System;
 
 namespace Maktub.Presentation
 {
@@ -27,14 +28,17 @@ namespace Maktub.Presentation
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //     .AddEntityFrameworkStores<ApplicationDbContext>();
-                
-            // services.AddIdentityServer()
-            //     .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            var key = Configuration["maktub-tp"];
+            var pfxBytes = Convert.FromBase64String(key);
+            var cert = new X509Certificate2(pfxBytes);
+            services.AddIdentityServer()
+                .AddSigningCredential(cert)
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            // services.AddAuthentication()
-            //     .AddIdentityServerJwt();
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
