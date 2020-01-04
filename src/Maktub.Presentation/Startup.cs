@@ -2,21 +2,24 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Maktub.Presentation.Data;
-using Maktub.Presentation.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography.X509Certificates;
 using System;
+using Maktub.Persistance.Contexts;
+using Maktub.Domain.Entities;
 
 namespace Maktub.Presentation
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
@@ -24,18 +27,21 @@ namespace Maktub.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+            services.AddDbContext<IdentityServerDbContext>(options =>
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            var key = Configuration["maktub-tp"];
-            var pfxBytes = Convert.FromBase64String(key);
-            var cert = new X509Certificate2(pfxBytes);
-            services.AddIdentityServer()
-                .AddSigningCredential(cert)
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddEntityFrameworkStores<IdentityServerDbContext>();
+                
+            var identityServerBuilder = services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, IdentityServerDbContext>();
+            if (!webHostEnvironment.IsDevelopment())
+            {
+                var cert = GetCert(Configuration);
+
+                identityServerBuilder.AddSigningCredential(cert);
+            }
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
@@ -72,9 +78,9 @@ namespace Maktub.Presentation
 
             app.UseRouting();
 
-            // app.UseAuthentication();
-            // app.UseIdentityServer();
-            // app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -95,6 +101,14 @@ namespace Maktub.Presentation
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
+        }
+
+        private static X509Certificate2 GetCert(IConfiguration Configuration)
+        {
+            var key = Configuration["maktub-tp"];
+            var pfxBytes = Convert.FromBase64String(key);
+            var cert = new X509Certificate2(pfxBytes);
+            return cert;
         }
     }
 }

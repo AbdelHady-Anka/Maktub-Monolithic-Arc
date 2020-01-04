@@ -23,7 +23,7 @@ namespace Maktub.Presentation
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, builder) =>
                 {
-                    if (!context.HostingEnvironment.IsDevelopment())
+                    if (!(context.HostingEnvironment.IsDevelopment() || true))
                     {
                         var keyVaultEndpoint = GetKeyVaultEndpoint();
                         if (!string.IsNullOrEmpty(keyVaultEndpoint))
