@@ -16,7 +16,8 @@ steps:
     packageType: sdk
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-
+- script: dotnet ef migrations script -o database.sql --project ./src/Maktub.Persistance/Maktub.Persistance.csproj
+  displayName:  'generate database script'
 - task: DotNetCoreCLI@2
   displayName: "Test"
   inputs:
@@ -32,6 +33,11 @@ steps:
     zipAfterPublish: True
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**/*.sql'
+    TargetFolder: '$(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
