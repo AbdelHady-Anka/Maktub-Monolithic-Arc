@@ -23,16 +23,19 @@ namespace Maktub.Presentation
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, builder) =>
                 {
-                    var keyVaultEndpoint = GetKeyVaultEndpoint();
-                    if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                    if (!context.HostingEnvironment.IsDevelopment())
                     {
-                        var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                        var keyVaultClient = new KeyVaultClient(
-                            new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback)
-                         );
-                        builder.AddAzureKeyVault(
-                            keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager()
-                         );
+                        var keyVaultEndpoint = GetKeyVaultEndpoint();
+                        if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                        {
+                            var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                            var keyVaultClient = new KeyVaultClient(
+                                new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback)
+                             );
+                            builder.AddAzureKeyVault(
+                                keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager()
+                             );
+                        }
                     }
                 })
                 .ConfigureWebHostDefaults(webBuilder =>

@@ -1,4 +1,4 @@
-export const ApplicationName = 'Presentation';
+export const ApplicationName = 'Maktub.Presentation';
 
 export const ReturnUrlType = 'returnUrl';
 
