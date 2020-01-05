@@ -36,12 +36,12 @@ namespace Maktub.Presentation
                 
             var identityServerBuilder = services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, IdentityServerDbContext>();
-            if (!webHostEnvironment.IsDevelopment())
-            {
-                var cert = GetCert(Configuration);
+            // if (!webHostEnvironment.IsDevelopment())
+            // {
+            //     var cert = GetCert(Configuration);
 
-                identityServerBuilder.AddSigningCredential(cert);
-            }
+            //     identityServerBuilder.AddSigningCredential(cert);
+            // }
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
