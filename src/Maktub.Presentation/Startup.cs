@@ -33,14 +33,14 @@ namespace Maktub.Presentation
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<IdentityServerDbContext>();
-                
+
             var identityServerBuilder = services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, IdentityServerDbContext>();
             // if (!webHostEnvironment.IsDevelopment())
             // {
-            //     var cert = GetCert(Configuration);
+            var cert = GetCert(Configuration);
 
-            //     identityServerBuilder.AddSigningCredential(cert);
+            identityServerBuilder.AddSigningCredential(cert);
             // }
 
             services.AddAuthentication()
@@ -91,10 +91,10 @@ namespace Maktub.Presentation
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+                    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                    // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
+                    spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
@@ -105,7 +105,8 @@ namespace Maktub.Presentation
 
         private static X509Certificate2 GetCert(IConfiguration Configuration)
         {
-            var key = Configuration["maktub-tp"];
+            var key = Configuration["maktub-key"];
+            Console.WriteLine("key -----------> " + key);
             var pfxBytes = Convert.FromBase64String(key);
             var cert = new X509Certificate2(pfxBytes);
             return cert;
