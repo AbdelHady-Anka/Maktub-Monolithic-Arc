@@ -19,7 +19,7 @@ steps:
 
 - script: dotnet tool install --global dotnet-ef --version 3.1
   displayName: 'install ef tool'
-- script: dotnet ef migrations script -o database.sql --project ./src/Maktub.Persistance/Maktub.Persistance.csproj
+- script: dotnet ef migrations script -o database.sql --project ./src/maktoob.Persistance/maktoob.Persistance.csproj
   displayName:  'generate database script'
 - task: DotNetCoreCLI@2
   displayName: "Test"
@@ -36,7 +36,7 @@ steps:
     zipAfterPublish: True
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-- task: CopyFiles@2
+- task: CopySQLFiles@2
   inputs:
     SourceFolder: '$(agent.builddirectory)'
     Contents: '**/*.sql'
@@ -44,8 +44,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'Maktub'
-
+    artifactName: 'maktoob'
 # steps:
 # - task: NuGetToolInstaller@1
 

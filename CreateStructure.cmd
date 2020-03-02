@@ -1,15 +1,15 @@
-dotnet new sln -n Maktub
+dotnet new sln -n maktoob
 
-REM dotnet "new" "angular" "--auth" "Individual" "-lang" "C#" "-n" "Maktub.Presentation" "-o" "src\Presentation"
-REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.CrossCuttingConcerns" "-o" "src\CrossCuttingConcerns"
-REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.Domain" "-o" "src\Domain"
-REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.Infrastructure" "-o" "src\Infrastructure"
-REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.Persistance" "-o" "src\Persistance"
-REM dotnet "new" "classlib" "-lang" "C#" "-n" "Maktub.Application" "-o" "src\Application"
+REM dotnet "new" "angular" "--auth" "Individual" "-lang" "C#" "-n" "maktoob.Presentation" "-o" "src\Presentation"
+REM dotnet "new" "classlib" "-lang" "C#" "-n" "maktoob.CrossCuttingConcerns" "-o" "src\CrossCuttingConcerns"
+REM dotnet "new" "classlib" "-lang" "C#" "-n" "maktoob.Domain" "-o" "src\Domain"
+REM dotnet "new" "classlib" "-lang" "C#" "-n" "maktoob.Infrastructure" "-o" "src\Infrastructure"
+REM dotnet "new" "classlib" "-lang" "C#" "-n" "maktoob.Persistance" "-o" "src\Persistance"
+REM dotnet "new" "classlib" "-lang" "C#" "-n" "maktoob.Application" "-o" "src\Application"
 
-dotnet "sln" "Maktub.sln" "add" "src\Presentation\Maktub.Presentation.csproj"
-dotnet "sln" "Maktub.sln" "add" "src\CrossCuttingConcerns\Maktub.CrossCuttingConcerns.csproj"
-dotnet "sln" "Maktub.sln" "add" "src\Domain\Maktub.Domain.csproj"
-dotnet "sln" "Maktub.sln" "add" "src\Infrastructure\Maktub.Infrastructure.csproj"
-dotnet "sln" "Maktub.sln" "add" "src\Persistance\Maktub.Persistance.csproj"
-dotnet "sln" "Maktub.sln" "add" "src\Application\Maktub.Application.csproj"
+dotnet "sln" "maktoob.sln" "add" "src\Presentation\maktoob.Presentation.csproj"
+dotnet "sln" "maktoob.sln" "add" "src\CrossCuttingConcerns\maktoob.CrossCuttingConcerns.csproj"
+dotnet "sln" "maktoob.sln" "add" "src\Domain\maktoob.Domain.csproj"
+dotnet "sln" "maktoob.sln" "add" "src\Infrastructure\maktoob.Infrastructure.csproj"
+dotnet "sln" "maktoob.sln" "add" "src\Persistance\maktoob.Persistance.csproj"
+dotnet "sln" "maktoob.sln" "add" "src\Application\maktoob.Application.csproj"
