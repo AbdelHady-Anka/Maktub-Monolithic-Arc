@@ -3,7 +3,7 @@ namespace maktoob.CrossCuttingConcerns.Error
     /// <summary>
     /// Encapsulates an error from the maktoob subsystem.
     /// </summary>
-    public class maktoobError
+    public class MaktoobError
     {
         /// <summary>
         /// Gets or sets the code for this error.

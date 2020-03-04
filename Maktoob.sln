@@ -19,6 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maktoob.SPA", "src\maktoob.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.WebApi", "src\Maktoob.WebApi\Maktoob.WebApi.csproj", "{C904A48D-1DBC-4C8A-B92D-FE0EF28890B1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60A35EA1-2C37-4999-BA2C-DAEADE2B1090}"
+	ProjectSection(SolutionItems) = preProject
+		Resources.Designer.t4 = Resources.Designer.t4
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,5 +132,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {896563FA-5A09-4B52-80BD-E30105E2C740}
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal
