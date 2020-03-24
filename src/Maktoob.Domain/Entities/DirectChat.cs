@@ -2,9 +2,9 @@ using System;
 
 namespace maktoob.Domain.Entities
 {
-    public class DirectChat : DirectChat<string>
+    public class DirectChat : DirectChat<Guid>
     {
-        public DirectChat(string peerId1, string peerId2) : base(peerId1, peerId2)
+        public DirectChat(Guid peerId1, Guid peerId2) : base(peerId1, peerId2)
         {
         }
     }

@@ -8,7 +8,8 @@ namespace maktoob.Domain.Entities
     {
 
     }
-    public class ChatList<TKey> where TKey : IEquatable<TKey>
+    public class ChatList<TKey> : AggregateRoot<TKey>
+        where TKey : IEquatable<TKey>
     {
         public TKey UserId { get; set; }
         public IEnumerable<Chat> Chats { get; set; }

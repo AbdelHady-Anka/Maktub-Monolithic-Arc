@@ -1,4 +1,5 @@
 using System.Linq;
+using maktoob.CrossCuttingConcerns.Extensions;
 using maktoob.Persistance.Contexts;
 using maktoob.Persistance.Extensions.Mongo;
 using Microsoft.AspNetCore.Builder;
@@ -27,8 +28,8 @@ namespace maktoob.SPA
             {
                 options.DatabaseName = Configuration["Mongo:DatabaseName"];
                 options.ConnectionString = Configuration["Mongo:ConnectionString"];
-            }
-            );
+            });
+            //services
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

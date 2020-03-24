@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\maktoob.Application\maktoob.Application.csproj" />
+    <ProjectReference Include="..\maktoob.CrossCuttingConcerns\maktoob.CrossCuttingConcerns.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
