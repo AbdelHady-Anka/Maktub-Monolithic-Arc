@@ -1,11 +1,11 @@
-﻿using maktoob.Application.Commands;
+﻿using Maktoob.Application.Commands;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Application.Decorators
+namespace Maktoob.Application.Decorators
 {
     public class AuditLoggingDecorator<TCommand> : ICommandHandler<TCommand>
         where TCommand : ICommand

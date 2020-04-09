@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace maktoob.CrossCuttingConcerns.Properties {
+namespace Maktoob.CrossCuttingConcerns.Properties {
     using System;
     
     
@@ -61,7 +61,7 @@ namespace maktoob.CrossCuttingConcerns.Properties {
                     global::System.Threading.Monitor.Enter(InternalSyncObject);
                     try {
                         if (object.ReferenceEquals(_resourceManager, null)) {
-                            global::System.Threading.Interlocked.Exchange(ref _resourceManager, new global::System.Resources.ResourceManager("maktoob.CrossCuttingConcerns.Properties.Errors", typeof(Errors).Assembly));
+                            global::System.Threading.Interlocked.Exchange(ref _resourceManager, new global::System.Resources.ResourceManager("Maktoob.CrossCuttingConcerns.Properties.Errors", typeof(Errors).Assembly));
                         }
                     }
                     finally {

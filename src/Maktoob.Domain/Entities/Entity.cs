@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace maktoob.Domain.Entities
+namespace Maktoob.Domain.Entities
 {
     public abstract class Entity<TKey> : IHasKey<TKey>, ITrackable
         where TKey : IEquatable<TKey>

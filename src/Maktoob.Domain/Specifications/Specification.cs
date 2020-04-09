@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace maktoob.Domain.Specifications
+namespace Maktoob.Domain.Specifications
 {
     public abstract class Specification<T>
     {

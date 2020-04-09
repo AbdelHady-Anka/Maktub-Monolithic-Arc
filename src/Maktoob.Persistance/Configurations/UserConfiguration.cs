@@ -1,8 +1,8 @@
-using maktoob.Domain.Entities;
+using Maktoob.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace maktoob.Persistance.Configurations
+namespace Maktoob.Persistance.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

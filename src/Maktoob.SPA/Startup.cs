@@ -1,14 +1,14 @@
 using System.Linq;
-using maktoob.CrossCuttingConcerns.Extensions;
-using maktoob.Persistance.Contexts;
-using maktoob.Persistance.Extensions.Mongo;
+using Maktoob.CrossCuttingConcerns.Extensions;
+using Maktoob.Persistance.Contexts;
+using Maktoob.Persistance.Extensions.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace maktoob.SPA
+namespace Maktoob.SPA
 {
     public class Startup
     {

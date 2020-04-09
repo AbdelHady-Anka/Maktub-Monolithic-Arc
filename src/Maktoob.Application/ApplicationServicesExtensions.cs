@@ -1,7 +1,7 @@
-using maktoob.Application.Commands;
-using maktoob.Application.Decorators;
-using maktoob.Application.Queries;
-using maktoob.Domain.Events;
+using Maktoob.Application.Commands;
+using Maktoob.Application.Decorators;
+using Maktoob.Application.Queries;
+using Maktoob.Domain.Events;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

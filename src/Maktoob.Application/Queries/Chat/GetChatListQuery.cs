@@ -1,9 +1,9 @@
-﻿using maktoob.Domain.Entities;
+﻿using Maktoob.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace maktoob.Application.Queries.Chat
+namespace Maktoob.Application.Queries.Chat
 {
     class GetChatListQuery : IQuery<IEnumerable<ChatList>>
     {

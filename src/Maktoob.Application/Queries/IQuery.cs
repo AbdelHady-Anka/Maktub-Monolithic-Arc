@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace maktoob.Application.Queries
+namespace Maktoob.Application.Queries
 {
     public interface IQuery<TResult> where TResult : class
     {

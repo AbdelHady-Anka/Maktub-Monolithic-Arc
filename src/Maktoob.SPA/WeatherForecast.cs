@@ -1,6 +1,6 @@
 using System;
 
-namespace maktoob.SPA
+namespace Maktoob.SPA
 {
     public class WeatherForecast
     {

@@ -1,11 +1,11 @@
-﻿using maktoob.Domain.Entities;
-using maktoob.Domain.Specifications;
+﻿using Maktoob.Domain.Entities;
+using Maktoob.Domain.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Domain.Repositories
+namespace Maktoob.Domain.Repositories
 {
     public interface IRepository<T>
         where T : AggregateRoot<Guid>

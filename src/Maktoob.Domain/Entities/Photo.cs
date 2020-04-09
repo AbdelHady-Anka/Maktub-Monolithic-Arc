@@ -1,4 +1,4 @@
-namespace maktoob.Domain.Entities
+namespace Maktoob.Domain.Entities
 {
     public class Photo
     {

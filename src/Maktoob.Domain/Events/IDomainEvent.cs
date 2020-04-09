@@ -1,4 +1,4 @@
-﻿namespace maktoob.Domain.Events
+﻿namespace Maktoob.Domain.Events
 {
     public interface IDomainEvent
     {

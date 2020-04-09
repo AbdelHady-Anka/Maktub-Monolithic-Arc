@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Domain.Events
+namespace Maktoob.Domain.Events
 {
     public interface IDomainEventHandler<T>
         where T : IDomainEvent

@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using System;
 
-namespace maktoob.Persistance.Extensions.Mongo
+namespace Maktoob.Persistance.Extensions.Mongo
 {
     public static class MongoDbExtensions
     {

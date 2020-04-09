@@ -21,7 +21,7 @@ steps:
 - script: dotnet tool install --global dotnet-ef --version 3.1
   displayName: 'install ef tool'
 
-- script: dotnet ef migrations script -o database.sql --project ./src/maktoob.Persistance/maktoob.Persistance.csproj
+- script: dotnet ef migrations script -o database.sql --project ./src/Maktoob.Persistance/Maktoob.Persistance.csproj
   displayName:  'generate database script'
 
 - script: dotnet test --configuration $(buildConfiguration)
@@ -33,4 +33,4 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'maktoob'
+    artifactName: 'Maktoob'

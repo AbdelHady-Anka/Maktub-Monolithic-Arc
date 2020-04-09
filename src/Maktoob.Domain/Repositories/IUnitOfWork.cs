@@ -4,7 +4,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Domain.Repositories
+namespace Maktoob.Domain.Repositories
 {
     public interface IUnitOfWork
     {

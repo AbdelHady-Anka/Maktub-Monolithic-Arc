@@ -1,9 +1,9 @@
-using maktoob.CrossCuttingConcerns.Properties;
+using Maktoob.CrossCuttingConcerns.Properties;
 
-namespace maktoob.CrossCuttingConcerns.Error
+namespace Maktoob.CrossCuttingConcerns.Error
 {
     /// <summary>
-    /// Service to enable localization for application facing maktoob errors.
+    /// Service to enable localization for application facing Maktoob errors.
     /// </summary>
     /// <remarks>
     /// These errors are returned to controllers and are generally used as display messages to end users.

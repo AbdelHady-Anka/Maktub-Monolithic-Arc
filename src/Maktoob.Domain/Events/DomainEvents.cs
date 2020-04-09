@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace maktoob.Domain.Events
+namespace Maktoob.Domain.Events
 {
     public static class DomainEvents
     {

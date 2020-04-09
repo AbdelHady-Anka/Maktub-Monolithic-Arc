@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace maktoob.Domain.ValueObjects
+namespace Maktoob.Domain.ValueObjects
 {
     public class Address : ValueObject
     {

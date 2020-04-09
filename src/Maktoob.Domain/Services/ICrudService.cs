@@ -1,11 +1,11 @@
-﻿using maktoob.Domain.Entities;
-using maktoob.Domain.Specifications;
+﻿using Maktoob.Domain.Entities;
+using Maktoob.Domain.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Domain.Services
+namespace Maktoob.Domain.Services
 {
     public interface ICrudService<T>
         where T : AggregateRoot<Guid>

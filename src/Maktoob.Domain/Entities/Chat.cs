@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MongoDB.Bson;
 
-namespace maktoob.Domain.Entities
+namespace Maktoob.Domain.Entities
 {
     public class Chat : Chat<ObjectId>
     {

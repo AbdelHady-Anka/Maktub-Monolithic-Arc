@@ -1,8 +1,8 @@
 using System;
-using maktoob.Domain.Entities;
+using Maktoob.Domain.Entities;
 using MongoDB.Bson;
 
-namespace maktoob.Domain.Repositories
+namespace Maktoob.Domain.Repositories
 {
     public interface IUserProfile : IUserProfileRepo<ObjectId>
     {

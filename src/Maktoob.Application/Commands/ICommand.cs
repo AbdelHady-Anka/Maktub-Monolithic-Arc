@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace maktoob.Application.Commands
+namespace Maktoob.Application.Commands
 {
     public interface ICommand
     {

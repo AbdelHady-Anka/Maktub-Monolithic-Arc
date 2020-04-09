@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace maktoob.Domain.Stores
+namespace Maktoob.Domain.Stores
 {
     /// <summary>
     /// Provides an abstraction for a store which manages user profiles.

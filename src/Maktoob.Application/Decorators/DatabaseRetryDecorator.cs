@@ -1,10 +1,10 @@
-﻿using maktoob.Application.Commands;
+﻿using Maktoob.Application.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Application.Decorators
+namespace Maktoob.Application.Decorators
 {
     class DatabaseRetryDecorator<TCommand> : ICommandHandler<TCommand>
         where TCommand : ICommand

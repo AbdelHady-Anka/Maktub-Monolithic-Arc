@@ -1,6 +1,6 @@
 using System;
 
-namespace maktoob.WebApi
+namespace Maktoob.WebApi
 {
     public class WeatherForecast
     {

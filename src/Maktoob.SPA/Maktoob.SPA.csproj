@@ -20,8 +20,8 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\maktoob.Application\maktoob.Application.csproj"/>
-    <ProjectReference Include="..\maktoob.CrossCuttingConcerns\maktoob.CrossCuttingConcerns.csproj"/>
+    <ProjectReference Include="..\Maktoob.Application\Maktoob.Application.csproj"/>
+    <ProjectReference Include="..\Maktoob.CrossCuttingConcerns\Maktoob.CrossCuttingConcerns.csproj"/>
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <Exec Command="node --version" ContinueOnError="true">

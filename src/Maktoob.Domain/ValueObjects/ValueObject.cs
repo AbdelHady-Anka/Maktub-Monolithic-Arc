@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace maktoob.Domain.ValueObjects
+namespace Maktoob.Domain.ValueObjects
 {
     public abstract class ValueObject
     {

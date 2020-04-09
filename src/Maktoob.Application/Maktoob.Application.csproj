@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\maktoob.Persistance\maktoob.Persistance.csproj" />
+    <ProjectReference Include="..\Maktoob.Persistance\Maktoob.Persistance.csproj" />
   </ItemGroup>
 
 </Project>

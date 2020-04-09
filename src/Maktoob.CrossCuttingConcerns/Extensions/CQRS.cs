@@ -1,5 +1,5 @@
-﻿using maktoob.Application.Commands;
-using maktoob.Application.Queries;
+﻿using Maktoob.Application.Commands;
+using Maktoob.Application.Queries;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace maktoob.CrossCuttingConcerns.Extensions
+namespace Maktoob.CrossCuttingConcerns.Extensions
 {
     public static class CQRS
     {

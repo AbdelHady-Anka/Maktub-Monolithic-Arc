@@ -1,5 +1,5 @@
-﻿using maktoob.Application.Commands;
-using maktoob.Application.Queries;
+﻿using Maktoob.Application.Commands;
+using Maktoob.Application.Queries;
 using System;
 using System.Threading.Tasks;
 

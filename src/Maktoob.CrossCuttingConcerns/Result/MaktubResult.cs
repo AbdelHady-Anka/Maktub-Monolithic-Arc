@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using maktoob.CrossCuttingConcerns.Error;
+using Maktoob.CrossCuttingConcerns.Error;
 
-namespace maktoob.CrossCuttingConcerns.Result
+namespace Maktoob.CrossCuttingConcerns.Result
 {
     /// <summary>
-    /// Represents the result of an maktoob operation.
+    /// Represents the result of an Maktoob operation.
     /// </summary>
     public class maktoobResult
     {
@@ -18,20 +18,20 @@ namespace maktoob.CrossCuttingConcerns.Result
         public bool Succeeded { get; protected set; }
         /// <summary>
         /// An <see cref="IEnumerable{T}"/> of <see cref="MaktoobError"/>s containing errors
-        /// that occured during the maktoob operation.
+        /// that occured during the Maktoob operation.
         /// </summary>
         /// <value>An <see cref="IEnumerable{T}"/> of <see cref="MaktoobError"/>s.</value>
         public IEnumerable<MaktoobError> Errors => _errors;
         /// <summary>
-        /// Returns an <see cref="maktoobResult"/> indicating a successful maktoob operation.
+        /// Returns an <see cref="maktoobResult"/> indicating a successful Maktoob operation.
         /// </summary>
         /// <returns>An <see cref="maktoobResult"/> indicating a successful operation.</returns>
         public static maktoobResult Success => _success;
         /// <summary>
-        /// Creates an <see cref="maktoobResult"/> indicating a failed maktoob operation, with a list of <paramref name="errors"/> if applicable.
+        /// Creates an <see cref="maktoobResult"/> indicating a failed Maktoob operation, with a list of <paramref name="errors"/> if applicable.
         /// </summary>
         /// <param name="errors">An optional array of <see cref="MaktoobError"/>s which caused the operation to fail.</param>
-        /// <returns>An <see cref="maktoobResult"/> indicating a failed maktoob operation, with a list of <paramref name="errors"/> if applicable.</returns>
+        /// <returns>An <see cref="maktoobResult"/> indicating a failed Maktoob operation, with a list of <paramref name="errors"/> if applicable.</returns>
         public static maktoobResult Failed(params MaktoobError[] errors)
         {
             var result = new maktoobResult { Succeeded = false };

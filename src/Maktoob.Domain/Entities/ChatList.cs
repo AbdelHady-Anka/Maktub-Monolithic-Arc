@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MongoDB.Bson;
 
-namespace maktoob.Domain.Entities
+namespace Maktoob.Domain.Entities
 {
     public class ChatList : ChatList<ObjectId>
     {

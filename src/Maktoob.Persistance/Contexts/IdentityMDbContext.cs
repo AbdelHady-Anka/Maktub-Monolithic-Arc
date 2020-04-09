@@ -1,11 +1,11 @@
 using System;
 using System.Reflection;
-using maktoob.Domain.Entities;
+using Maktoob.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace maktoob.Persistance.Contexts
+namespace Maktoob.Persistance.Contexts
 {
     public class IdentityMDbContext : IdentityMDbContext<User, Role, string>
     // Organization, Project, Team, Notification, UserProfile, Photo,

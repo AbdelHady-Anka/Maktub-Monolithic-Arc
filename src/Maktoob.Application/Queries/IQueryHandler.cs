@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Application.Queries
+namespace Maktoob.Application.Queries
 {
     public interface IQueryHandler<TQuery, TResult> 
         where TResult : class 

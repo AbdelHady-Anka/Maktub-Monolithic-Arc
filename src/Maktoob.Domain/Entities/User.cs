@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace maktoob.Domain.Entities
+namespace Maktoob.Domain.Entities
 {
     public class User : User<string>
     {

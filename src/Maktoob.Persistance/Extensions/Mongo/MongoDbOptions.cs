@@ -1,4 +1,4 @@
-﻿namespace maktoob.Persistance.Extensions.Mongo
+﻿namespace Maktoob.Persistance.Extensions.Mongo
 {
     public class MongoDbOptions
     {

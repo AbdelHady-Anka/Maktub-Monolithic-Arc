@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace maktoob.Persistance.Extensions.Mongo
+namespace Maktoob.Persistance.Extensions.Mongo
 {
     internal class MongoConvention : IConventionPack
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace maktoob.Application.Queries.Message
+namespace Maktoob.Application.Queries.Message
 {
     class GetChatsQuery
     {

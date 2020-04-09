@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace maktoob.Domain.Repositories
+namespace Maktoob.Domain.Repositories
 {
     public interface IMongoDbCollection<TCollection> where TCollection : class
     {

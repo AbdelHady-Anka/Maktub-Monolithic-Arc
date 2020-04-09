@@ -1,7 +1,7 @@
 ﻿using System;
 using MongoDB.Bson;
 
-namespace maktoob.Domain.Entities
+namespace Maktoob.Domain.Entities
 {
     public class UserProfile : UserProfile<ObjectId>
     {

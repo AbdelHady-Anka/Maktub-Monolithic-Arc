@@ -1,4 +1,4 @@
-﻿using maktoob.Domain.Repositories;
+﻿using Maktoob.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -7,7 +7,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Persistance.Repositories
+namespace Maktoob.Persistance.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {

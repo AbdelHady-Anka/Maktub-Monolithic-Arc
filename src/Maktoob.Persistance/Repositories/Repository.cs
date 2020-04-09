@@ -1,6 +1,6 @@
-﻿using maktoob.Domain.Entities;
-using maktoob.Domain.Repositories;
-using maktoob.Domain.Specifications;
+﻿using Maktoob.Domain.Entities;
+using Maktoob.Domain.Repositories;
+using Maktoob.Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace maktoob.Persistance.Repositories
+namespace Maktoob.Persistance.Repositories
 {
     public class Repository<T> : IRepository<T>
         where T : AggregateRoot<Guid>

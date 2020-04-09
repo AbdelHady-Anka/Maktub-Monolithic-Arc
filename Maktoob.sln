@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maktoob.Domain", "src\maktoob.Domain\maktoob.Domain.csproj", "{C308DB58-9348-4F90-8C48-846CDB59F97C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.Domain", "src\Maktoob.Domain\Maktoob.Domain.csproj", "{C308DB58-9348-4F90-8C48-846CDB59F97C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maktoob.Infrastructure", "src\maktoob.Infrastructure\maktoob.Infrastructure.csproj", "{814A8133-B285-4CA8-98FB-76607A668B32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.Infrastructure", "src\Maktoob.Infrastructure\Maktoob.Infrastructure.csproj", "{814A8133-B285-4CA8-98FB-76607A668B32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maktoob.CrossCuttingConcerns", "src\maktoob.CrossCuttingConcerns\maktoob.CrossCuttingConcerns.csproj", "{CD7E9F47-E937-48AC-BABA-F441F17D301A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.CrossCuttingConcerns", "src\Maktoob.CrossCuttingConcerns\Maktoob.CrossCuttingConcerns.csproj", "{CD7E9F47-E937-48AC-BABA-F441F17D301A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maktoob.Application", "src\maktoob.Application\maktoob.Application.csproj", "{72108044-F98F-4C93-9ED9-85CAE139D9F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.Application", "src\Maktoob.Application\Maktoob.Application.csproj", "{72108044-F98F-4C93-9ED9-85CAE139D9F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maktoob.Persistance", "src\maktoob.Persistance\maktoob.Persistance.csproj", "{9D3B91BF-FA02-4CCE-8A9E-8BB3BA7C409C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.Persistance", "src\Maktoob.Persistance\Maktoob.Persistance.csproj", "{9D3B91BF-FA02-4CCE-8A9E-8BB3BA7C409C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maktoob.SPA", "src\maktoob.SPA\maktoob.SPA.csproj", "{A918BF55-58B5-419A-925C-A3CADCC4782F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.SPA", "src\Maktoob.SPA\Maktoob.SPA.csproj", "{A918BF55-58B5-419A-925C-A3CADCC4782F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maktoob.WebApi", "src\Maktoob.WebApi\Maktoob.WebApi.csproj", "{C904A48D-1DBC-4C8A-B92D-FE0EF28890B1}"
 EndProject

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace maktoob.SPA
+namespace Maktoob.SPA
 {
     public class Program
     {
@@ -45,6 +45,6 @@ namespace maktoob.SPA
                });
 
         private static string GetKeyVaultEndpoint()
-            => "https://maktoob-kv.vault.azure.net";
+            => "https://Maktoob-kv.vault.azure.net";
     }
 }

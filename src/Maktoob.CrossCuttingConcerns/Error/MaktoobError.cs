@@ -1,7 +1,7 @@
-namespace maktoob.CrossCuttingConcerns.Error
+namespace Maktoob.CrossCuttingConcerns.Error
 {
     /// <summary>
-    /// Encapsulates an error from the maktoob subsystem.
+    /// Encapsulates an error from the Maktoob subsystem.
     /// </summary>
     public class MaktoobError
     {

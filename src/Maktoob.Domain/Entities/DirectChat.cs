@@ -1,6 +1,6 @@
 using System;
 
-namespace maktoob.Domain.Entities
+namespace Maktoob.Domain.Entities
 {
     public class DirectChat : DirectChat<Guid>
     {
