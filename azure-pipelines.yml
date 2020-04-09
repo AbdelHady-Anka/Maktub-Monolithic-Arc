@@ -30,6 +30,13 @@ steps:
 - script: dotnet publish -r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet publish $(BuildConfiguration)'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
