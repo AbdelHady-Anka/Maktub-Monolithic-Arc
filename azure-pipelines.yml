@@ -14,60 +14,23 @@ steps:
   inputs:
     version: '3.1.x'
     packageType: sdk
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
 - script: dotnet tool install --global dotnet-ef --version 3.1
   displayName: 'install ef tool'
+
 - script: dotnet ef migrations script -o database.sql --project ./src/maktoob.Persistance/maktoob.Persistance.csproj
   displayName:  'generate database script'
-- task: DotNetCoreCLI@2
-  displayName: "Test"
-  inputs:
-    command: test
-    projects: '**/*tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
+- script: dotnet test --configuration $(buildConfiguration)
+  displayName: 'dotnet test $(buildConfiguration)'
 
-# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-- task: CopySQLFiles@2
-  inputs:
-    SourceFolder: '$(agent.builddirectory)'
-    Contents: '**/*.sql'
-    TargetFolder: '$(build.artifactstagingdirectory)'
+- script: dotnet publish -r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: 'dotnet publish $(BuildConfiguration)'
+
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'maktoob'
-# steps:
-# - task: NuGetToolInstaller@1
-
-# - task: NuGetCommand@2
-#   inputs:
-#     restoreSolution: '$(solution)'
-
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-  
-# - task: PublishBuildArtifacts@1
-#   displayName: 'Publish Artifact'
-#   inputs:
-#     PathtoPublish: '$(build.artifactstagingdirectory)'
-#   condition: succeededOrFailed()
-
-  

@@ -33,9 +33,9 @@ namespace maktoob.Domain.Specifications
         }
     }
 
-    internal class NotSpecification<T> : Specification<T>
+    internal sealed class NotSpecification<T> : Specification<T>
     {
-        private Specification<T> _specification;
+        private readonly Specification<T> _specification;
 
         public NotSpecification(Specification<T> specification)
         {
@@ -51,10 +51,10 @@ namespace maktoob.Domain.Specifications
         }
     }
 
-    internal class OrSpecification<T> : Specification<T>
+    internal sealed class OrSpecification<T> : Specification<T>
     {
-        private Specification<T> _left;
-        private Specification<T> _right;
+        private readonly Specification<T> _left;
+        private readonly Specification<T> _right;
 
         public OrSpecification(Specification<T> left, Specification<T> right)
         {
@@ -73,10 +73,10 @@ namespace maktoob.Domain.Specifications
         }
     }
 
-    internal class AndSpecification<T> : Specification<T>
+    internal sealed class AndSpecification<T> : Specification<T>
     {
-        private Specification<T> _left;
-        private Specification<T> _right;
+        private readonly Specification<T> _left;
+        private readonly Specification<T> _right;
 
         public AndSpecification(Specification<T> left, Specification<T> right)
         {

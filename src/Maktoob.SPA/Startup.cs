@@ -24,11 +24,11 @@ namespace maktoob.SPA
         {
             services.AddControllersWithViews();
 
-            services.AddMongoDb(options =>
-            {
-                options.DatabaseName = Configuration["Mongo:DatabaseName"];
-                options.ConnectionString = Configuration["Mongo:ConnectionString"];
-            });
+            // services.AddMongoDb(options =>
+            // {
+            //     options.DatabaseName = Configuration["Mongo:DatabaseName"];
+            //     options.ConnectionString = Configuration["Mongo:ConnectionString"];
+            // });
             //services
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -49,9 +49,9 @@ namespace maktoob.SPA
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {

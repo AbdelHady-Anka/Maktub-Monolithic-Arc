@@ -6,7 +6,7 @@ using System;
 
 namespace maktoob.Persistance.Extensions.Mongo
 {
-    public static class MongoDb
+    public static class MongoDbExtensions
     {
         public static void AddMongoDb([NotNullAttribute] this IServiceCollection services, [NotNullAttribute] Action<MongoDbOptions> optionsAction)
         {
