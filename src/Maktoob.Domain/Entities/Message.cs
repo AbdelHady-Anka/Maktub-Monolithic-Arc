@@ -2,15 +2,22 @@ using System;
 
 namespace Maktoob.Domain.Entities
 {
-    public class Message : Message<string>
+    public enum MessageStatus
+    {
+        READ, DELIVERED
+    }
+    public class Message
+    {
+        public DateTime? SentDate { get; set; }
+        public DateTime ReadDate { get; set; }
+        public DateTime DeliveredDate { get; set; }
+        public MessageStatus Status { get; set; }
+        public Guid SenderId { get; set; }
+        public MessageContent Content { get; set; }
+    }
+
+    public class MessageContent
     {
 
-    }
-    public class Message<TKey> where TKey : IEquatable<TKey>
-    {
-        public DateTime Sent { get; set; }
-        public DateTime Read { get; set; }
-        public DateTime Delivered { get; set; }
-        public TKey SenderId { get; set; }
     }
 }

@@ -1,87 +1,20 @@
-using System;
 using System.Reflection;
-using Maktoob.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Maktoob.Persistance.Contexts
 {
-    public class IdentityMDbContext : IdentityMDbContext<User, Role, string>
-    // Organization, Project, Team, Notification, UserProfile, Photo,
-    {
-        public IdentityMDbContext() { }
-
-        public IdentityMDbContext(DbContextOptions options) : base(options) { }
-    }
-    public class IdentityMDbContext<TUser, TRole, TKey>
-    // TOrganization, TProject, TTeam, TNotification, TUserProfile, TPhoto 
-    : IdentityMDbContext<TUser, TRole, TKey,
-     // TOrganization, TProject, TTeam, TNotification, TUserProfile, TPhoto, OrgMembership<TKey>, TeamMembership<TKey>, AccessRight<TKey>, Diagram<TKey>,
-     IdentityUserClaim<TKey>, IdentityUserRole<TKey>, IdentityUserLogin<TKey>, IdentityRoleClaim<TKey>, IdentityUserToken<TKey>>
-        where TUser : IdentityUser<TKey>
-        where TRole : IdentityRole<TKey>
-        where TKey : IEquatable<TKey>
-
-        // where TOrganization : Organization<TKey>
-        // where TProject : Project<TKey>
-        // where TTeam : Team<TKey>
-        // where TPhoto : Photo
-        // where TNotification : Notification<TKey>
-        // where TUserProfile : UserProfile<TKey>
-    {
-        public IdentityMDbContext() { }
-
-        public IdentityMDbContext(DbContextOptions options) : base(options) { }
-    }
-
-    /// <summary>
-    /// Base class for the Entity Framework database context used for Equtria
-    /// </summary>
-    /// <typeparam name="TOrganization">The type of organization objects.</typeparam>
-    /// <typeparam name="TProject">The type of project objects.</typeparam>
-    /// <typeparam name="TTeam">The type of team objects.</typeparam>
-    /// <typeparam name="TDiagram">The type of diagram objects.</typeparam>
-    /// <typeparam name="TKey">The type of the primary key for all entities</typeparam>
-    /// <typeparam name="TOrgMembership">The type of organization membership object.</typeparam>
-    /// <typeparam name="TTeamMembership">The type of team membership object.</typeparam>
-    /// <typeparam name="TAccessRight">The type of project access right object.</typeparam>
-    /// <typeparam name="TPhoto">The type of photo objects.</typeparam>
-    /// <typeparam name="TNotification">The type of notification objects.</typeparam>
-    /// <typeparam name="TUserProfile">The type of user profile objects.</>
-    public abstract class IdentityMDbContext<TUser, TRole, TKey,
-    // TOrganization, TProject, TTeam, TNotification, TUserProfile, TPhoto, TOrgMembership, TTeamMembership, TAccessRight, TDiagram,
-    TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        : IdentityDbContext<TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken>
-        where TUser : IdentityUser<TKey>
-        where TRole : IdentityRole<TKey>
-        where TKey : IEquatable<TKey>
-        where TUserClaim : IdentityUserClaim<TKey>
-        where TUserRole : IdentityUserRole<TKey>
-        where TUserLogin : IdentityUserLogin<TKey>
-        where TRoleClaim : IdentityRoleClaim<TKey>
-        where TUserToken : IdentityUserToken<TKey>
-        // where TOrganization : Organization<TKey>
-        // where TProject : Project<TKey>
-        // where TTeam : Team<TKey>
-        // where TDiagram : Diagram<TKey>
-        // where TOrgMembership : OrgMembership<TKey>
-        // where TTeamMembership : TeamMembership<TKey>
-        // where TAccessRight : AccessRight<TKey>
-        // where TPhoto : Photo
-        // where TNotification : Notification<TKey>
-        // where TUserProfile : UserProfile<TKey>
+    public class MaktoobDbContext : DbContext
     {
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
         /// <param name="options">The options to be used by a <see cref="DbContext"/>.</param>
-        public IdentityMDbContext(DbContextOptions options) : base(options) { }
+        public MaktoobDbContext(DbContextOptions options) : base(options) { }
 
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        protected IdentityMDbContext() { }
+        protected MaktoobDbContext() { }
 
         // /// <summary>
         // /// Gets or sets the <see cref="DbSet{TEntity}"/> of organizations.
@@ -143,7 +76,7 @@ namespace Maktoob.Persistance.Contexts
             // use defualt Identity configuration
             base.OnModelCreating(builder);
 
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetCallingAssembly());
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             // configure users table
             // builder.Entity<TUser>(b =>
             // {

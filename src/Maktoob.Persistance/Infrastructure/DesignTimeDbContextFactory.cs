@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Maktoob.Persistance.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -6,19 +7,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Maktoob.Persistance.Infrastructure
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<IdentityMDbContext>
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MaktoobDbContext>
     {
-        public IdentityMDbContext CreateDbContext(string[] args)
+        public MaktoobDbContext CreateDbContext(string[] args)
         {
-            
-            //IConfigurationRoot configuration = new ConfigurationBuilder()
-            //.SetBasePath(Path.GetFullPath("../Maktoob.SPA"))
-            //.AddJsonFile("appsettings.json")
-            //.Build();
-            //var connectionString = configuration.GetConnectionString("DefaultConnection");
-            var builder = new DbContextOptionsBuilder<IdentityMDbContext>();
-            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Maktoob;Trusted_Connection=True;MultipleActiveResultSets=true");
-            return new IdentityMDbContext(builder.Options);
+            string connectionString = Environment.GetEnvironmentVariable("DBConnectionString");
+            Console.WriteLine("args : ------------------ : " + connectionString);
+            var builder = new DbContextOptionsBuilder<MaktoobDbContext>();
+            builder.UseSqlServer(connectionString ?? "Server=(localdb)\\mssqllocaldb;Database=Maktoob;Trusted_Connection=True;MultipleActiveResultSets=true");
+            return new MaktoobDbContext(builder.Options);
         }
     }
 }

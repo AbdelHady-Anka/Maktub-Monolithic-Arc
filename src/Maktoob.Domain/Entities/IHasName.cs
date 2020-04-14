@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Maktoob.Domain.Entities
 {
-    public abstract class AggregateRoot<TKey> : Entity<TKey>
-        where TKey : IEquatable<TKey>
+    public interface IHasName
     {
+        string Name { get; set; }
+        string NormalizedName { get; set; }
     }
 }

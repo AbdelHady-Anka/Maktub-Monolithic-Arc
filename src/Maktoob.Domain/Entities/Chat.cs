@@ -1,16 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MongoDB.Bson;
 
 namespace Maktoob.Domain.Entities
 {
-    public class Chat : Chat<ObjectId>
-    {
-
-    }
-    public class Chat<TKey> : AggregateRoot<TKey>
-        where TKey : IEquatable<TKey>
+    public class Chat : Entity<Guid>
     {
         public IEnumerable<Message> Messages { get; set; }
     }

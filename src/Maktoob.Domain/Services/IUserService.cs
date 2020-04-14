@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Maktoob.Application.Queries.Chat
+namespace Maktoob.Domain.Services
 {
-    class GetChatListQuery : IQuery<IEnumerable<ChatList>>
+    public interface IUserService : ICrudService<User>
     {
-
     }
 }

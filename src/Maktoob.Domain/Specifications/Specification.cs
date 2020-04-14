@@ -1,98 +1,97 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Maktoob.Domain.Specifications
 {
-    public abstract class Specification<T>
+
+    public abstract class Specification<TEntity>
     {
-        public bool IsSatisfiedBy(T entity)
+        public bool IsSatisfiedBy(TEntity entity)
         {
-            Func<T, bool> predicate = ToExpression().Compile();
+            Func<TEntity, bool> predicate = ToExpression().Compile();
 
             return predicate(entity);
         }
 
-        public abstract Expression<Func<T, bool>> ToExpression();
+        public abstract Expression<Func<TEntity, bool>> ToExpression();
 
-        public Specification<T> And(Specification<T> specification)
+        public Specification<TEntity> And(Specification<TEntity> specification)
         {
-            return new AndSpecification<T>(this, specification);
+            return new AndSpecification<TEntity>(this, specification);
         }
 
-        public Specification<T> Or(Specification<T> specification)
+        public Specification<TEntity> Or(Specification<TEntity> specification)
         {
-            return new OrSpecification<T>(this, specification);
+            return new OrSpecification<TEntity>(this, specification);
         }
 
-        public Specification<T> Not()
+        public Specification<TEntity> Not()
         {
-            return new NotSpecification<T>(this);
+            return new NotSpecification<TEntity>(this);
         }
     }
 
-    internal sealed class NotSpecification<T> : Specification<T>
+    internal sealed class NotSpecification<TEntity> : Specification<TEntity>
     {
-        private readonly Specification<T> _specification;
+        private readonly Specification<TEntity> _specification;
 
-        public NotSpecification(Specification<T> specification)
+        public NotSpecification(Specification<TEntity> specification)
         {
             _specification = specification;
         }
 
-        public override Expression<Func<T, bool>> ToExpression()
+        public override Expression<Func<TEntity, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> expression = _specification.ToExpression();
+            Expression<Func<TEntity, bool>> expression = _specification.ToExpression();
             UnaryExpression notExpression = Expression.Not(expression);
 
-            return Expression.Lambda<Func<T, bool>>(notExpression, expression.Parameters.Single());
+            return Expression.Lambda<Func<TEntity, bool>>(notExpression, expression.Parameters.Single());
         }
     }
 
-    internal sealed class OrSpecification<T> : Specification<T>
+    internal sealed class OrSpecification<TEntity> : Specification<TEntity>
     {
-        private readonly Specification<T> _left;
-        private readonly Specification<T> _right;
+        private readonly Specification<TEntity> _left;
+        private readonly Specification<TEntity> _right;
 
-        public OrSpecification(Specification<T> left, Specification<T> right)
+        public OrSpecification(Specification<TEntity> left, Specification<TEntity> right)
         {
             _left = left;
             _right = right;
         }
 
-        public override Expression<Func<T, bool>> ToExpression()
+        public override Expression<Func<TEntity, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> leftExpression = _left.ToExpression();
-            Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+            Expression<Func<TEntity, bool>> leftExpression = _left.ToExpression();
+            Expression<Func<TEntity, bool>> rightExpression = _right.ToExpression();
 
             BinaryExpression orExpression = Expression.OrElse(leftExpression.Body, rightExpression.Body);
 
-            return Expression.Lambda<Func<T, bool>>(orExpression, leftExpression.Parameters.Single());
+            return Expression.Lambda<Func<TEntity, bool>>(orExpression, leftExpression.Parameters.Single());
         }
     }
 
-    internal sealed class AndSpecification<T> : Specification<T>
+    internal sealed class AndSpecification<TEntity> : Specification<TEntity>
     {
-        private readonly Specification<T> _left;
-        private readonly Specification<T> _right;
+        private readonly Specification<TEntity> _left;
+        private readonly Specification<TEntity> _right;
 
-        public AndSpecification(Specification<T> left, Specification<T> right)
+        public AndSpecification(Specification<TEntity> left, Specification<TEntity> right)
         {
             _left = left;
             _right = right;
         }
 
-        public override Expression<Func<T, bool>> ToExpression()
+        public override Expression<Func<TEntity, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> leftExpression = _left.ToExpression();
-            Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+            Expression<Func<TEntity, bool>> leftExpression = _left.ToExpression();
+            Expression<Func<TEntity, bool>> rightExpression = _right.ToExpression();
 
             BinaryExpression andExpression = Expression
                 .AndAlso(leftExpression, rightExpression);
 
-            return Expression.Lambda<Func<T, bool>>(andExpression, leftExpression.Parameters.Single());
+            return Expression.Lambda<Func<TEntity, bool>>(andExpression, leftExpression.Parameters.Single());
         }
     }
 }

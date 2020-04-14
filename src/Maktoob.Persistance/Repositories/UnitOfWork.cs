@@ -21,17 +21,17 @@ namespace Maktoob.Persistance.Repositories
 
         public async Task BeginTransactionAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
-            _dbContextTransaction = await _dbContext.Database.BeginTransactionAsync(isolationLevel).ConfigureAwait(true);
+            _dbContextTransaction = await _dbContext.Database.BeginTransactionAsync(isolationLevel);
         }
 
         public async Task CommitTransactionAsync()
         {
-            await _dbContextTransaction.CommitAsync().ConfigureAwait(true);
+            await _dbContextTransaction.CommitAsync();
         }
 
         public async Task SaveChangesAsync()
         {
-            await _dbContext.SaveChangesAsync().ConfigureAwait(true);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using Maktoob.Application.Commands;
 using Maktoob.Application.Queries;
+using Maktoob.CrossCuttingConcerns.Result;
 using System;
 using System.Threading.Tasks;
 
 namespace Maktoob.Application
 {
-    public class Dispatcher
+    public class Dispatcher : IDispatcher
     {
         private readonly IServiceProvider _provider;
 
@@ -15,17 +16,19 @@ namespace Maktoob.Application
         }
 
 
-        public async Task DispatchAsync(ICommand command)
+        public async Task<T> DispatchAsync<T>(ICommand<T> command) where T : MaktoobResult
         {
-            Type type = typeof(ICommandHandler<>);
-            Type[] typeArgs = { command.GetType() };
+            Type type = typeof(ICommandHandler<,>);
+            Type[] typeArgs = { command.GetType(), typeof(T) };
             Type handlerType = type.MakeGenericType(typeArgs);
 
             dynamic handler = _provider.GetService(handlerType);
-            await handler.HandleAsync((dynamic)command);
+            T result = await handler.HandleAsync((dynamic)command);
+
+            return result;
         }
 
-        public async Task<T> DispatchAsync<T>(IQuery<T> query) where T : class
+        public async Task<T> DispatchAsync<T>(IQuery<T> query) where T : class, new()
         {
             Type type = typeof(IQueryHandler<,>);
             Type[] typeArgs = { query.GetType(), typeof(T) };

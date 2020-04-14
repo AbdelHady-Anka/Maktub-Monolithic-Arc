@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Maktoob.Application.Queries
 {
-    public interface IQuery<TResult> where TResult : class
+    public interface IQuery<out TResult> where TResult : class
     {
     }
 }

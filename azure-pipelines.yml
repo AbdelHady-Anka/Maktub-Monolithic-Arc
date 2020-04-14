@@ -21,8 +21,8 @@ steps:
 - script: dotnet tool install --global dotnet-ef --version 3.1
   displayName: 'install ef tool'
 
-- script: dotnet ef migrations script -o database.sql --project ./src/Maktoob.Persistance/Maktoob.Persistance.csproj
-  displayName:  'generate database script'
+- script: dotnet ef database update --project ./src/Maktoob.Persistance/Maktoob.Persistance.csproj
+  displayName:  'update sql database'
 
 - script: dotnet test --configuration $(buildConfiguration)
   displayName: 'dotnet test $(buildConfiguration)'

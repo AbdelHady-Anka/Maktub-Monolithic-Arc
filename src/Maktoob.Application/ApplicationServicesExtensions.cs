@@ -1,12 +1,17 @@
 using Maktoob.Application.Commands;
 using Maktoob.Application.Decorators;
 using Maktoob.Application.Queries;
+using Maktoob.CrossCuttingConcerns.Settings;
 using Maktoob.Domain.Events;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Maktoob.Application
 {
@@ -14,15 +19,13 @@ namespace Maktoob.Application
     {
         public static IServiceCollection AddMessageHandlers(this IServiceCollection services)
         {
-            services.AddScoped<Dispatcher>();
+            services.AddScoped<IDispatcher, Dispatcher>();
             List<Type> handlerTypes = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => t.GetInterfaces().Any(i => IsHandlerInterface(i)))
                 .Where(t => t.Name.EndsWith("Handler"))
                 .ToList();
 
             handlerTypes.ForEach(ht => { AddHandler(services, ht); });
-
-            services.AddEventHandlers();
 
             return services;
         }
@@ -35,7 +38,30 @@ namespace Maktoob.Application
             handlerTypes.ForEach(ht => AddEventHandler(services, ht));
             return services;
         }
+        public static IServiceCollection AddJwtBearerAuthentication(this IServiceCollection services)
+        {
+            var jsonWebTokenSettings = services.BuildServiceProvider().GetRequiredService<IOptions<JsonWebTokenSettings>>();
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jsonWebTokenSettings.Value.Key));
 
+            void JwtBearer(JwtBearerOptions options)
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = securityKey,
+                    ValidIssuer = jsonWebTokenSettings.Value.Issuer,
+                    ValidAudience = jsonWebTokenSettings.Value.Audience,
+                    ValidateAudience = !string.IsNullOrWhiteSpace(jsonWebTokenSettings.Value.Audience),
+                    ValidateIssuer = !string.IsNullOrWhiteSpace(jsonWebTokenSettings.Value.Issuer),
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateLifetime = true
+                };
+            }
+
+            services.AddAuthentication(options => options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearer);
+            return services;
+        }
         private static void AddEventHandler(IServiceCollection services, Type type)
             => services.AddTransient(type);
 
@@ -54,6 +80,7 @@ namespace Maktoob.Application
 
             Type interfaceType = type.GetInterfaces().Single(i => IsHandlerInterface(i));
             Func<IServiceProvider, object> factory = BuildPipline(pipline, interfaceType);
+            services.AddScoped(interfaceType,factory);
         }
 
         private static Func<IServiceProvider, object> BuildPipline(List<Type> pipline, Type interfaceType)
@@ -94,7 +121,6 @@ namespace Maktoob.Application
             return result;
         }
 
-
         private static object GetParameter(ParameterInfo parameterInfo, object current, IServiceProvider provider)
         {
             Type parameterType = parameterInfo.ParameterType;
@@ -117,12 +143,12 @@ namespace Maktoob.Application
 
             if (type == typeof(DatabaseRetryAttribute))
             {
-                return typeof(DatabaseRetryDecorator<>);
+                return typeof(DatabaseRetryDecorator<,>);
             }
 
             if (type == typeof(AuditLoggingAttribute))
             {
-                return typeof(AuditLoggingDecorator<>);
+                return typeof(AuditLoggingDecorator<,>);
             }
 
             throw new ArgumentException(attribute.ToString());
@@ -137,7 +163,7 @@ namespace Maktoob.Application
             }
             Type typeDefinition = type.GetGenericTypeDefinition();
 
-            return typeDefinition == typeof(ICommandHandler<>) || typeDefinition == typeof(IQueryHandler<,>);
+            return typeDefinition == typeof(ICommandHandler<,>) || typeDefinition == typeof(IQueryHandler<,>);
         }
     }
 }

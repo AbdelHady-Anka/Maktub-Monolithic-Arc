@@ -1,9 +1,16 @@
-using System.Linq;
-using Maktoob.CrossCuttingConcerns.Extensions;
+using System;
+using Maktoob.Application;
+using Maktoob.CrossCuttingConcerns.Error;
+using Maktoob.CrossCuttingConcerns.Settings;
+using Maktoob.Domain.Entities;
+using Maktoob.Domain.Infrastructure;
+using Maktoob.Infrastructure.JsonWebToken;
 using Maktoob.Persistance.Contexts;
 using Maktoob.Persistance.Extensions.Mongo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,14 +29,76 @@ namespace Maktoob.SPA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddDbContext<MaktoobDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            services.AddIdentityCore<User>(options =>
+            {
 
-            // services.AddMongoDb(options =>
-            // {
-            //     options.DatabaseName = Configuration["Mongo:DatabaseName"];
-            //     options.ConnectionString = Configuration["Mongo:ConnectionString"];
-            // });
-            //services
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            })
+                .AddSignInManager()
+                .AddDefaultTokenProviders()
+                .AddErrorDescriber<MaktoobErrorDescriber>()
+                .AddEntityFrameworkStores<MaktoobDbContext>();
+            //services.AddIdentity<User, Role>(options =>
+            //{
+                
+            //    // Password settings.
+            //    options.Password.RequireDigit = true;
+            //    options.Password.RequireLowercase = true;
+            //    options.Password.RequireNonAlphanumeric = true;
+            //    options.Password.RequireUppercase = true;
+            //    options.Password.RequiredLength = 6;
+            //    options.Password.RequiredUniqueChars = 1;
+
+            //    // Lockout settings.
+            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            //    options.Lockout.MaxFailedAccessAttempts = 5;
+            //    options.Lockout.AllowedForNewUsers = true;
+
+            //    // User settings.
+            //    options.User.AllowedUserNameCharacters =
+            //    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            //    options.User.RequireUniqueEmail = true;
+
+            //    options.SignIn.RequireConfirmedAccount = false;
+            //    options.SignIn.RequireConfirmedEmail = false;
+            //    options.SignIn.RequireConfirmedPhoneNumber = false;
+            //}).AddEntityFrameworkStores<MaktoobDbContext>()
+            //.AddErrorDescriber<MaktoobErrorDescriber>();
+
+            services.Configure<JsonWebTokenSettings>(Configuration.GetSection("JsonWebToken"));
+            services.Configure<MongoDbSettings>(Configuration.GetSection("Mongo"));
+            
+            services.AddMessageHandlers();
+            services.AddEventHandlers();
+            services.AddControllers();
+            services.AddMongoDb();
+            services.AddJwtBearerAuthentication();
+            services.AddSingleton<IJsonWebTokenCoder, JsonWebTokenCoder>();
+            services.AddScoped<ErrorDescriber>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -59,7 +128,8 @@ namespace Maktoob.SPA
             }
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -67,18 +137,18 @@ namespace Maktoob.SPA
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+            //app.UseSpa(spa =>
+            //{
+            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+            //    // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
+            //    spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                }
-            });
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+            //    }
+            //});
         }
     }
 }

@@ -12,4 +12,10 @@ namespace Maktoob.Domain.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
     }
+    public abstract class EntityHasName<TKey> : Entity<TKey>, IHasName
+        where TKey : IEquatable<TKey>
+    {
+        public string Name { get; set; }
+        public string NormalizedName { get; set; }
+    }
 }

@@ -10,37 +10,44 @@ using System.Threading.Tasks;
 
 namespace Maktoob.Persistance.Repositories
 {
-    public class Repository<T> : IRepository<T>
-        where T : AggregateRoot<Guid>
+    public class Repository<TEntity> : IRepository<TEntity>
+        where TEntity : Entity<Guid>
     {
-        private readonly DbContext _dbContext;
+        protected readonly DbContext _dbContext;
 
         public Repository(DbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(T entity)
+        public async Task AddAsync(TEntity entity)
         {
-            await _dbContext.AddAsync<T>(entity);
+            await _dbContext.AddAsync<TEntity>(entity);
         }
 
-        public Task DeleteAsync(T entity)
+        public Task DeleteAsync(TEntity entity)
         {
-            _dbContext.Remove<T>(entity);
+            _dbContext.Remove<TEntity>(entity);
             return Task.CompletedTask;
         }
 
-        public async Task<IList<T>> GetAsync(Specification<T> specification)
+        public async Task<IList<TEntity>> GetAsync(MultiResultSpec<TEntity> spec)
         {
-            var result = await _dbContext.Set<T>().Where(specification.ToExpression()).ToListAsync().ConfigureAwait(true);
+            var result = await _dbContext.Set<TEntity>().Where(spec.ToExpression()).ToListAsync();
 
             return result;
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task<TEntity> GetAsync(SingleResultSpec<TEntity> spec)
         {
-            _dbContext.Update<T>(entity);
+            var reslut = await _dbContext.Set<TEntity>().SingleOrDefaultAsync(spec.ToExpression());
+
+            return reslut;
+        }
+
+        public Task UpdateAsync(TEntity entity)
+        {
+            _dbContext.Update<TEntity>(entity);
             return Task.CompletedTask;
         }
     }
