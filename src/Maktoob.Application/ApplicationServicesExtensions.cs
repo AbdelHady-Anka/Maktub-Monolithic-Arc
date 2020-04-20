@@ -17,6 +17,13 @@ namespace Maktoob.Application
 {
     public static class ApplicationServicesExtensions
     {
+        public static void AddApplication(this IServiceCollection services)
+        {
+            services.AddMessageHandlers();
+            services.AddEventHandlers();
+            services.AddJwtBearerAuthentication();
+
+        }
         public static IServiceCollection AddMessageHandlers(this IServiceCollection services)
         {
             services.AddScoped<IDispatcher, Dispatcher>();
@@ -58,7 +65,11 @@ namespace Maktoob.Application
                 };
             }
 
-            services.AddAuthentication(options => options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(JwtBearer);
             return services;
         }

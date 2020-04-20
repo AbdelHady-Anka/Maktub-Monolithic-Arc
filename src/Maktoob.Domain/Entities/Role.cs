@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Maktoob.Domain.Entities
 {
-    public class Role : IdentityRole<Guid>
+    public class Role
     {
 
     }

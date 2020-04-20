@@ -325,4 +325,8 @@
     <value>User is not in role '{0}'.</value>
     <comment>Error when a user is not in the role</comment>
   </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>No results found.</value>
+    <comment>Error when there is nothing found</comment>
+  </data>
 </root>

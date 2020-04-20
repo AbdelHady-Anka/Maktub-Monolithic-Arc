@@ -1,4 +1,5 @@
 using System.Reflection;
+using Maktoob.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Maktoob.Persistance.Contexts
@@ -16,10 +17,10 @@ namespace Maktoob.Persistance.Contexts
         /// </summary>
         protected MaktoobDbContext() { }
 
-        // /// <summary>
-        // /// Gets or sets the <see cref="DbSet{TEntity}"/> of organizations.
-        // /// </summary>
-        // public DbSet<TOrganization> Organizations { get; set; }
+        /// <summary>
+        /// Gets or sets the <see cref="DbSet{User}"/> of Users.
+        /// </summary>
+        public DbSet<User> Users { get; set; }
 
         // /// <summary>
         // /// Gets or sets the <see cref="DbSet{TEntity}"/> of projects.

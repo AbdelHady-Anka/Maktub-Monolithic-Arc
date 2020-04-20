@@ -1,9 +1,11 @@
 
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Maktoob.CrossCuttingConcerns.Error
 {
-    public static class IdentityErrorExtensions
+    public static class IdentityErrorEthistensions
     {
         public static MaktoobError ToMaktoobError(this IdentityError identityError)
         {
@@ -15,7 +17,7 @@ namespace Maktoob.CrossCuttingConcerns.Error
     /// <summary>
     /// Encapsulates an error from the Maktoob subsystem.
     /// </summary>
-    public class MaktoobError
+    public class MaktoobError : IEquatable<MaktoobError>
     {
         /// <summary>
         /// Gets or sets the code for this error.
@@ -32,5 +34,29 @@ namespace Maktoob.CrossCuttingConcerns.Error
         /// The description for this error.
         /// </value>
         public string Description { get; set; }
+
+        public bool Equals([AllowNull] MaktoobError other)
+        {
+            if (ReferenceEquals(this, null) && ReferenceEquals(other, null))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(this, null) || ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (this.Code == other.Code)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

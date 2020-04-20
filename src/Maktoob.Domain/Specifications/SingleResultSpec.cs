@@ -9,7 +9,8 @@ namespace Maktoob.Domain.Specifications
 {
     public abstract class SingleResultSpec<TEntity> : Specification<TEntity> {}
 
-    public class FindByIdSpec : SingleResultSpec<Entity<Guid>>
+    public class FindByIdSpec<TEntity> : SingleResultSpec<TEntity>
+        where TEntity : Entity<Guid>
     {
         public Guid Id { get; protected set; }
         public FindByIdSpec(Guid id)
@@ -17,13 +18,14 @@ namespace Maktoob.Domain.Specifications
             Id = id;
         }
 
-        public override Expression<Func<Entity<Guid>, bool>> ToExpression()
+        public override Expression<Func<TEntity, bool>> ToExpression()
         {
             return (entity) => entity.Id == Id;
         }
     }
 
-    public class FindByNameSpec : SingleResultSpec<EntityHasName<Guid>>
+    public class FindByNameSpec<TEntity> : SingleResultSpec<TEntity>
+    where TEntity : EntityHasName<Guid>
     {
         public string Name { get; protected set; }
         protected readonly IKeyNormalizer _keyNormalizer;
@@ -34,9 +36,28 @@ namespace Maktoob.Domain.Specifications
             _keyNormalizer = keyNormalizer;
         }
 
-        public override Expression<Func<EntityHasName<Guid>, bool>> ToExpression()
+        public override Expression<Func<TEntity, bool>> ToExpression()
         {
             return (entity) => entity.NormalizedName == _keyNormalizer.Normalize(Name);
+        }
+    }
+
+    public class FindByEmailSpec<TEntity> : SingleResultSpec<TEntity>
+        where TEntity : User
+    {
+        private readonly IKeyNormalizer _keyNormalizer;
+
+        public FindByEmailSpec(string email, IKeyNormalizer keyNormalizer)
+        {
+            Email = email;
+            _keyNormalizer = keyNormalizer;
+        }
+
+        public string Email { get; set; }
+
+        public override Expression<Func<TEntity, bool>> ToExpression()
+        {
+            return (entity) => entity.NormalizedEmail == _keyNormalizer.Normalize(Email);
         }
     }
 }

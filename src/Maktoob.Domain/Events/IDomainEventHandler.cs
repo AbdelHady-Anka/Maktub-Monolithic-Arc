@@ -8,7 +8,6 @@ namespace Maktoob.Domain.Events
     public interface IDomainEventHandler<T>
         where T : IDomainEvent
     {
-        void Handle(T domainEvent);
         Task HandleAsync(T domainEvent);
     }
 }

@@ -273,4 +273,7 @@
   <data name="InvalidEmail" xml:space="preserve">
     <value>البريد الإلكتروني '{0}' غير صالح.</value>
   </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>لم يتم العثور على نتائج.</value>
+  </data>
 </root>

@@ -231,6 +231,15 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'No results found.'.
+        /// </summary>
+        public static string NotFound {
+            get {
+                return ResourceManager.GetString(ResourceNames.NotFound, _resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'No IUserTwoFactorTokenProvider&lt;{0}&gt; named &apos;{1}&apos; is registered.'.
         /// </summary>
         public static string NoTokenProvider {
@@ -785,6 +794,11 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
             /// Stores the resource name 'NoRoleType'.
             /// </summary>
             public const string NoRoleType = "NoRoleType";
+            
+            /// <summary>
+            /// Stores the resource name 'NotFound'.
+            /// </summary>
+            public const string NotFound = "NotFound";
             
             /// <summary>
             /// Stores the resource name 'NoTokenProvider'.

@@ -1,4 +1,5 @@
 ﻿using Maktoob.Domain.Repositories;
+using Maktoob.Persistance.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -11,10 +12,10 @@ namespace Maktoob.Persistance.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _dbContext;
+        private readonly MaktoobDbContext _dbContext;
         private IDbContextTransaction _dbContextTransaction;
 
-        public UnitOfWork(DbContext dbContext)
+        public UnitOfWork(MaktoobDbContext dbContext)
         {
             _dbContext = dbContext;
         }

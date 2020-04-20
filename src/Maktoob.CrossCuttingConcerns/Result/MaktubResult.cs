@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Maktoob.CrossCuttingConcerns.Error;
 using Microsoft.AspNetCore.Identity;
 
 namespace Maktoob.CrossCuttingConcerns.Result
 {
-    public static class IdentityResultExtensions
+    public static class IdentityResultEthistensions
     {
         public static MaktoobResult ToMaktoobResult(this IdentityResult identityResult)
         {
@@ -43,7 +45,7 @@ namespace Maktoob.CrossCuttingConcerns.Result
     /// <summary>
     /// Represents the result of an Maktoob operation.
     /// </summary>
-    public class MaktoobResult
+    public class MaktoobResult : IEquatable<MaktoobResult>
     {
         private List<MaktoobError> _errors = new List<MaktoobError>();
 
@@ -94,6 +96,35 @@ namespace Maktoob.CrossCuttingConcerns.Result
             return Succeeded ?
                    "Succeeded" :
                    string.Format("{0} : {1}", "Failed", string.Join(",", Errors.Select(x => x.Code).ToList()));
+        }
+
+        public bool Equals([AllowNull] MaktoobResult other)
+        {
+            if (ReferenceEquals(this, null) && ReferenceEquals(other, null))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(this, null) || ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (this.Succeeded && other.Succeeded)
+            {
+                return true;
+            }
+
+            if (this.Errors.SequenceEqual(other.Errors))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Maktoob.Domain.Entities;
 using Maktoob.CrossCuttingConcerns.Result;
 using System.ComponentModel.DataAnnotations;
+using Maktoob.Domain.Services;
 
 namespace Maktoob.Application.Users
 {
@@ -20,11 +21,11 @@ namespace Maktoob.Application.Users
 
         public class Handler : ICommandHandler<RegisterUserCommand, MaktoobResult>
         {
-            private readonly UserManager<User> _userManager;
+            private readonly IUserService _userService;
 
-            public Handler(UserManager<User> userManager)
+            public Handler(IUserService userService)
             {
-                _userManager = userManager;
+                _userService = userService;
             }
 
             public async Task<MaktoobResult> HandleAsync(RegisterUserCommand command)
@@ -35,11 +36,11 @@ namespace Maktoob.Application.Users
                     Name = command.UserName
                 };
 
-                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, command.Password);
+                user.PasswordHash = _userService.PasswordHasher.Hash(command.Password);
 
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userService.CreateAsync(user);
 
-                return result.ToMaktoobResult();
+                return result;
             }
         }
     }

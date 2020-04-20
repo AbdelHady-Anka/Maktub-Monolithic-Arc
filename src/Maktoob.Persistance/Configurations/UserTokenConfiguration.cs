@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Maktoob.Persistance.Configurations
 {
-    public class UserTokenConfiguration : IEntityTypeConfiguration<IdentityUserToken<Guid>>
-    {
-        public void Configure(EntityTypeBuilder<IdentityUserToken<Guid>> builder)
-        {
-            builder.ToTable("UserToken");
-        }
-    }
+    //public class UserTokenConfiguration : IEntityTypeConfiguration<IdentityUserToken<Guid>>
+    //{
+    //    public void Configure(EntityTypeBuilder<IdentityUserToken<Guid>> builder)
+    //    {
+    //        builder.ToTable("UserToken");
+    //    }
+    //}
 }

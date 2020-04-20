@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Maktoob.Persistance.Configurations
 {
-    public class RoleClaimConfiguration : IEntityTypeConfiguration<IdentityRoleClaim<Guid>>
-    {
-        public void Configure(EntityTypeBuilder<IdentityRoleClaim<Guid>> builder)
-        {
-            builder.ToTable("RoleClaim");
-        }
-    }
+    //public class RoleClaimConfiguration : IEntityTypeConfiguration<IdentityRoleClaim<Guid>>
+    //{
+    //    public void Configure(EntityTypeBuilder<IdentityRoleClaim<Guid>> builder)
+    //    {
+    //        builder.ToTable("RoleClaim");
+    //    }
+    //}
 }

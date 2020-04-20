@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Maktoob.Persistance.Configurations
 {
-    public class UserClaimConfiguration : IEntityTypeConfiguration<IdentityUserClaim<Guid>>
-    {
-        public void Configure(EntityTypeBuilder<IdentityUserClaim<Guid>> builder)
-        {
-            builder.ToTable("UserClaim");
-        }
-    }
+    //public class UserClaimConfiguration : IEntityTypeConfiguration<IdentityUserClaim<Guid>>
+    //{
+    //    public void Configure(EntityTypeBuilder<IdentityUserClaim<Guid>> builder)
+    //    {
+    //        builder.ToTable("UserClaim");
+    //    }
+    //}
 }
