@@ -21,35 +21,52 @@ namespace Maktoob.Persistance.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
         {
             await _dbContext.AddAsync<TEntity>(entity);
         }
 
-        public Task DeleteAsync(TEntity entity)
+        public Task AddAsync(IEnumerable<TEntity> entities)
+        {
+            _dbContext.Set<TEntity>().AddRange(entities);
+            return Task.CompletedTask;
+        }
+
+        public virtual Task DeleteAsync(TEntity entity)
         {
             _dbContext.Remove<TEntity>(entity);
             return Task.CompletedTask;
         }
-        
-        public async Task<TEntity> GetAsync(SingleResultSpec<TEntity> spec)
+
+        public Task DeleteAsync(IEnumerable<TEntity> entities)
+        {
+            _dbContext.Set<TEntity>().RemoveRange(entities);
+            return Task.CompletedTask;
+        }
+
+        public virtual async Task<TEntity> GetAsync(SingleResultSpec<TEntity> spec)
         {
             var reslut = await _dbContext.Set<TEntity>().SingleOrDefaultAsync(spec.ToExpression());
 
             return reslut;
         }
-        public async Task<IList<TEntity>> GetAsync(MultiResultSpec<TEntity> spec)
+
+        public virtual async Task<IList<TEntity>> GetAsync(MultiResultSpec<TEntity> spec)
         {
             var result = await _dbContext.Set<TEntity>().Where(spec.ToExpression()).ToListAsync();
 
             return result;
         }
 
-
-
-        public Task UpdateAsync(TEntity entity)
+        public virtual Task UpdateAsync(TEntity entity)
         {
             _dbContext.Update<TEntity>(entity);
+            return Task.CompletedTask;
+        }
+
+        public Task UpdateAsync(IEnumerable<TEntity> entities)
+        {
+            _dbContext.Set<TEntity>().UpdateRange(entities);
             return Task.CompletedTask;
         }
     }

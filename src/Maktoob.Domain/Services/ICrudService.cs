@@ -1,4 +1,5 @@
-﻿using Maktoob.CrossCuttingConcerns.Result;
+﻿using Maktoob.CrossCuttingConcerns.Error;
+using Maktoob.CrossCuttingConcerns.Result;
 using Maktoob.Domain.Entities;
 using Maktoob.Domain.Specifications;
 using System;
@@ -8,12 +9,19 @@ using System.Threading.Tasks;
 
 namespace Maktoob.Domain.Services
 {
-    public interface ICrudService<T>
-        where T : Entity<Guid>
+    public interface ICrudService<TEntity>
+        where TEntity : Entity<Guid>
     {
-        Task<MaktoobResult> CreateAsync(T entity);
-        Task<MaktoobResult> ReadAsync(Specification<T> spec);
-        Task<MaktoobResult> UpdateAsync(T entity);
-        Task<MaktoobResult> DeleteAsync(T entity);
+        GErrorDescriber ErrorDescriber { get; }
+
+        Task<GResult> CreateAsync(TEntity entity);
+        Task<GResult> CreateAsync(IEnumerable<TEntity> entities);
+        Task<GResult<TEntity>> ReadAsync(SingleResultSpec<TEntity> spec);
+        Task<GResult<IEnumerable<TEntity>>> ReadAsync(MultiResultSpec<TEntity> spec);
+        Task<GResult> UpdateAsync(TEntity entity);
+        Task<GResult> UpdateAsync(IEnumerable<TEntity> entities);
+        Task<GResult> DeleteAsync(TEntity entity);
+        Task<GResult> DeleteAsync(IEnumerable<TEntity> entities);
+
     }
 }

@@ -7,7 +7,6 @@ namespace Maktoob.CrossCuttingConcerns
     {
         public static void AddCrossCuttingConcerns(this IServiceCollection services)
         {
-            services.AddScoped<ErrorDescriber>();
         }
     }
 }

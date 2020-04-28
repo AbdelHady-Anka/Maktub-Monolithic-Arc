@@ -12,7 +12,7 @@ namespace Maktoob.Domain.Specifications
     public class FindByIdSpec<TEntity> : SingleResultSpec<TEntity>
         where TEntity : Entity<Guid>
     {
-        public Guid Id { get; protected set; }
+        public Guid Id { get;  }
         public FindByIdSpec(Guid id)
         {
             Id = id;
@@ -27,7 +27,7 @@ namespace Maktoob.Domain.Specifications
     public class FindByNameSpec<TEntity> : SingleResultSpec<TEntity>
     where TEntity : EntityHasName<Guid>
     {
-        public string Name { get; protected set; }
+        public string Name { get;  }
         protected readonly IKeyNormalizer _keyNormalizer;
 
         public FindByNameSpec(string name, IKeyNormalizer keyNormalizer)
@@ -38,7 +38,8 @@ namespace Maktoob.Domain.Specifications
 
         public override Expression<Func<TEntity, bool>> ToExpression()
         {
-            return (entity) => entity.NormalizedName == _keyNormalizer.Normalize(Name);
+            var normalizedName = _keyNormalizer.Normalize(Name);
+            return (entity) => entity.NormalizedName == normalizedName;
         }
     }
 
@@ -57,7 +58,26 @@ namespace Maktoob.Domain.Specifications
 
         public override Expression<Func<TEntity, bool>> ToExpression()
         {
-            return (entity) => entity.NormalizedEmail == _keyNormalizer.Normalize(Email);
+            var normalizedEmail = _keyNormalizer.Normalize(Email);
+            return (entity) => entity.NormalizedEmail == normalizedEmail;
         }
+    }
+
+    public class FindUserLogin<TEntity> : SingleResultSpec<TEntity>
+        where TEntity : UserLogin
+    {
+        public FindUserLogin(Guid userId, string jwtId, string refreshToken)
+        {
+            UserId = userId;
+            JwtId = jwtId;
+            RefreshToken = refreshToken;
+        }
+        public string JwtId { get; }
+        public Guid UserId { get;  }
+        public string RefreshToken { get;  }
+        public override Expression<Func<TEntity, bool>> ToExpression()
+        {
+            return (entity) => entity.UserId == UserId && entity.JwtId == JwtId && entity.RefreshToken == RefreshToken;
+;        }
     }
 }

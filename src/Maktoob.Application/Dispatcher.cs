@@ -16,7 +16,7 @@ namespace Maktoob.Application
         }
 
 
-        public async Task<T> DispatchAsync<T>(ICommand<T> command) where T : MaktoobResult
+        public async Task<T> DispatchAsync<T>(ICommand<T> command) where T : GResult
         {
             Type type = typeof(ICommandHandler<,>);
             Type[] typeArgs = { command.GetType(), typeof(T) };

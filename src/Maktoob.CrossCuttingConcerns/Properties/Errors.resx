@@ -158,8 +158,8 @@
     <comment>Error for invalid role names</comment>
   </data>
   <data name="InvalidToken" xml:space="preserve">
-    <value>Invalid token.</value>
-    <comment>Error when a token is not recognized</comment>
+    <value>{0}</value>
+    <comment>Error when the token is invalid</comment>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>User name '{0}' is invalid, can only contain letters or digits.</value>
@@ -328,5 +328,13 @@
   <data name="NotFound" xml:space="preserve">
     <value>No results found.</value>
     <comment>Error when there is nothing found</comment>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Invalid user name or password.</value>
+    <comment>Error for invalid username, email or password.</comment>
+  </data>
+  <data name="SignOutFailed" xml:space="preserve">
+    <value>You cannot log out now. Please try again in a moment.</value>
+    <comment>Error when sign out user</comment>
   </data>
 </root>

@@ -151,7 +151,7 @@
     <value>اسم الدور '{0}' غير صالح.</value>
   </data>
   <data name="InvalidToken" xml:space="preserve">
-    <value>رمز مميز غير صالح.</value>
+    <value>{0}</value>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>اسم المستخدم '{0}' غير صالح ، ولا يمكن أن يحتوي إلا على أحرف أو أرقام.</value>
@@ -275,5 +275,11 @@
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>لم يتم العثور على نتائج.</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>‏‏اسم مستخدم أو كلمة مرور غير صحيحة.</value>
+  </data>
+  <data name="SignOutFailed" xml:space="preserve">
+    <value>لا يمكنك تسجيل الخروج الآن!. يرجى المحاولة مرة أخرى بعد قليل.</value>
   </data>
 </root>

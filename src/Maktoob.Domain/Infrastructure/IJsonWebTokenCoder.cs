@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace Maktoob.Domain.Infrastructure
@@ -6,6 +7,6 @@ namespace Maktoob.Domain.Infrastructure
     public interface IJsonWebTokenCoder
     {
         Dictionary<string, object> Decode(string token);
-        string Encode(IList<Claim> claims);
+        string Encode(IEnumerable<Claim> claims);
     }
 }

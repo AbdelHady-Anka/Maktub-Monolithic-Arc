@@ -22,10 +22,10 @@ namespace Maktoob.Persistance.Contexts
         /// </summary>
         public DbSet<User> Users { get; set; }
 
-        // /// <summary>
-        // /// Gets or sets the <see cref="DbSet{TEntity}"/> of projects.
-        // /// </summary>
-        // public DbSet<TProject> Projects { get; set; }
+        /// <summary>
+        /// Gets or sets the <see cref="DbSet{TEntity}"/> of UserLogins.
+        /// </summary>
+        public DbSet<UserLogin> UserLogins { get; set; }
 
         // /// <summary>
         // /// Gets or sets the <see cref="DbSet{TEntity}"/> of diagrams.
@@ -74,9 +74,6 @@ namespace Maktoob.Persistance.Contexts
         /// </param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // use defualt Identity configuration
-            base.OnModelCreating(builder);
-
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             // configure users table
             // builder.Entity<TUser>(b =>

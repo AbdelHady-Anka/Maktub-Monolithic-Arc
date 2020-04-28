@@ -1,4 +1,6 @@
-﻿using Maktoob.CrossCuttingConcerns.Result;
+﻿using Maktoob.CrossCuttingConcerns.Error;
+using Maktoob.CrossCuttingConcerns.Normalizers;
+using Maktoob.CrossCuttingConcerns.Result;
 using Maktoob.CrossCuttingConcerns.Security;
 using Maktoob.Domain.Entities;
 using System;
@@ -11,6 +13,6 @@ namespace Maktoob.Domain.Services
     public interface IUserService : ICrudService<User>
     {
         IPasswordHasher PasswordHasher { get; }
-        Task<MaktoobResult> SignInAsync(string username, string password);
+        IKeyNormalizer KeyNormalizer { get; }
     }
 }

@@ -1,6 +1,6 @@
 using Maktoob.Application;
 using Maktoob.CrossCuttingConcerns;
-using Maktoob.CrossCuttingConcerns.Settings;
+using Maktoob.CrossCuttingConcerns.Options;
 using Maktoob.Domain;
 using Maktoob.Infrastructure;
 using Maktoob.Persistance;
@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
 
 namespace Maktoob.SPA
 {
@@ -59,7 +61,7 @@ namespace Maktoob.SPA
             //})
             //    .AddSignInManager()
             //    .AddDefaultTokenProviders()
-            //    .AddErrorDescriber<MaktoobErrorDescriber>()
+            //    .AddErrorDescriber<GErrorDescriber>()
             //    .AddEntityFrameworkStores<MaktoobDbContext>();
             //services.AddIdentity<User, Role>(options =>
             //{
@@ -86,10 +88,10 @@ namespace Maktoob.SPA
             //    options.SignIn.RequireConfirmedEmail = false;
             //    options.SignIn.RequireConfirmedPhoneNumber = false;
             //}).AddEntityFrameworkStores<MaktoobDbContext>()
-            //.AddErrorDescriber<MaktoobErrorDescriber>();
+            //.AddErrorDescriber<GErrorDescriber>();
 
-            services.Configure<JsonWebTokenSettings>(Configuration.GetSection("JsonWebToken"));
-            services.Configure<MongoDbSettings>(Configuration.GetSection("Mongo"));
+            services.Configure<JsonWebTokenOptions>(Configuration.GetSection("JsonWebToken"));
+            services.Configure<MongoDbOptions>(Configuration.GetSection("Mongo"));
 
             services.AddInfrastructure();
             services.AddPersistence();
@@ -108,6 +110,27 @@ namespace Maktoob.SPA
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Maktoob API", Version = "v1" });
+                //var openApiSecurityScheme = new OpenApiSecurityScheme
+                //{
+                //    Description = "JWT Authorization header using the bearer scheme",
+                //    Name = "Authorization",
+                //    In = ParameterLocation.Header,
+                //    Type = SecuritySchemeType.ApiKey
+                //};
+                options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme.",
+                });
+                //////Add Operation Specific Authorization///////
+                options.OperationFilter<AuthOperationFilter>();
+                //var openApiSecurityRequirement = new OpenApiSecurityRequirement();
+                //openApiSecurityRequirement.Add(openApiSecurityScheme, new List<string> { "Bearer" });
+                //options.AddSecurityRequirement(openApiSecurityRequirement);
             });
         }
 

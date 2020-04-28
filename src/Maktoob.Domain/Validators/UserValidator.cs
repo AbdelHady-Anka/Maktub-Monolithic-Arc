@@ -16,29 +16,29 @@ namespace Maktoob.Domain.Validators
     {
         private readonly IUserRepository _userRepository;
         private readonly IKeyNormalizer _keyNormalizer;
-        private readonly MaktoobErrorDescriber _errorDescriber;
+        private readonly GErrorDescriber _errorDescriber;
 
-        public UserValidator(IUserRepository userRepository, IKeyNormalizer keyNormalizer, MaktoobErrorDescriber errorDescriber)
+        public UserValidator(IUserRepository userRepository, IKeyNormalizer keyNormalizer, GErrorDescriber errorDescriber)
         {
             _userRepository = userRepository;
             _keyNormalizer = keyNormalizer;
             _errorDescriber = errorDescriber;
         }
 
-        public async Task<MaktoobResult> ValidateAsync(User user)
+        public async Task<IEnumerable<GError>> ValidateAsync(User user)
         {
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
             }
-            var errors = new List<MaktoobError>();
+            var errors = new List<GError>();
             await ValidateNameAsync(user, errors);
             await ValidateEmailAsync(user, errors);
 
-            return errors.Count > 0 ? MaktoobResult.Failed(errors.ToArray()) : MaktoobResult.Success;
+            return errors;
         }
 
-        private async Task ValidateEmailAsync(User user, List<MaktoobError> errors)
+        private async Task ValidateEmailAsync(User user, List<GError> errors)
         {
             var userWithSameEmail = await _userRepository.GetAsync(new FindByEmailSpec<User>(user.Email, _keyNormalizer));
 
@@ -48,7 +48,7 @@ namespace Maktoob.Domain.Validators
             }
         }
 
-        private async Task ValidateNameAsync(User user, List<MaktoobError> errors)
+        private async Task ValidateNameAsync(User user, List<GError> errors)
         {
             var userWithSameName = await _userRepository.GetAsync(new FindByNameSpec<User>(user.Name, _keyNormalizer));
 

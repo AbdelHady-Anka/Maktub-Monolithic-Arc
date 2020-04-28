@@ -1,7 +1,7 @@
 using Maktoob.Application.Commands;
 using Maktoob.Application.Decorators;
 using Maktoob.Application.Queries;
-using Maktoob.CrossCuttingConcerns.Settings;
+using Maktoob.CrossCuttingConcerns.Options;
 using Maktoob.Domain.Events;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Maktoob.Application
 {
-    public static class ApplicationServicesExtensions
+    public static class ServicesExtensions
     {
         public static void AddApplication(this IServiceCollection services)
         {
@@ -47,18 +47,18 @@ namespace Maktoob.Application
         }
         public static IServiceCollection AddJwtBearerAuthentication(this IServiceCollection services)
         {
-            var jsonWebTokenSettings = services.BuildServiceProvider().GetRequiredService<IOptions<JsonWebTokenSettings>>();
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jsonWebTokenSettings.Value.Key));
+            var jsonWebTokenOptions = services.BuildServiceProvider().GetRequiredService<IOptions<JsonWebTokenOptions>>();
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jsonWebTokenOptions.Value.Key));
 
             void JwtBearer(JwtBearerOptions options)
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     IssuerSigningKey = securityKey,
-                    ValidIssuer = jsonWebTokenSettings.Value.Issuer,
-                    ValidAudience = jsonWebTokenSettings.Value.Audience,
-                    ValidateAudience = !string.IsNullOrWhiteSpace(jsonWebTokenSettings.Value.Audience),
-                    ValidateIssuer = !string.IsNullOrWhiteSpace(jsonWebTokenSettings.Value.Issuer),
+                    ValidIssuer = jsonWebTokenOptions.Value.Issuer,
+                    ValidAudience = jsonWebTokenOptions.Value.Audience,
+                    ValidateAudience = !string.IsNullOrWhiteSpace(jsonWebTokenOptions.Value.Audience),
+                    ValidateIssuer = !string.IsNullOrWhiteSpace(jsonWebTokenOptions.Value.Issuer),
                     ValidateIssuerSigningKey = true,
                     ClockSkew = TimeSpan.Zero,
                     ValidateLifetime = true

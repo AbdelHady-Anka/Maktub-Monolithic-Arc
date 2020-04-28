@@ -8,7 +8,7 @@ namespace Maktoob.Application.Commands
 {
     public interface ICommandHandler<in TCommand, TResult> 
         where TCommand : ICommand<TResult>
-        where TResult : MaktoobResult
+        where TResult : GResult
     {
         Task<TResult> HandleAsync(TCommand command);
     }

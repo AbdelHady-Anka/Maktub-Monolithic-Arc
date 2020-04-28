@@ -12,7 +12,7 @@ namespace Maktoob.Persistance.Infrastructure
         public MaktoobDbContext CreateDbContext(string[] args)
         {
             string connectionString = Environment.GetEnvironmentVariable("DBConnectionString");
-            Console.WriteLine("args : ------------------ : " + connectionString);
+            Console.WriteLine("args : ------------------ : " + connectionString?.Length);
             var builder = new DbContextOptionsBuilder<MaktoobDbContext>();
             builder.UseSqlServer(connectionString ?? "Server=(localdb)\\mssqllocaldb;Database=Maktoob;Trusted_Connection=True;MultipleActiveResultSets=true");
             return new MaktoobDbContext(builder.Options);

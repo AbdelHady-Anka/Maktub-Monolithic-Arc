@@ -1,10 +1,11 @@
-﻿using Maktoob.CrossCuttingConcerns.Result;
+﻿using Maktoob.CrossCuttingConcerns.Error;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Maktoob.Domain.Validators
 {
-    public interface IValidator<TEntity> where TEntity : class, new()
+    public interface IValidator<TEntity> where TEntity : class
     {
-        Task<MaktoobResult> ValidateAsync(TEntity entity);
+        Task<IEnumerable<GError>> ValidateAsync(TEntity entity);
     }
 }

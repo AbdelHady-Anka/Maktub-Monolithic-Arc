@@ -132,6 +132,15 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'Invalid user name or password.'.
+        /// </summary>
+        public static string InvalidCredentials {
+            get {
+                return ResourceManager.GetString(ResourceNames.InvalidCredentials, _resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'Email &apos;{0}&apos; is invalid.'.
         /// </summary>
         public static string InvalidEmail {
@@ -177,7 +186,7 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
-        /// Looks up a localized string similar to 'Invalid token.'.
+        /// Looks up a localized string similar to '{0}'.
         /// </summary>
         public static string InvalidToken {
             get {
@@ -335,6 +344,15 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         public static string RoleNotFound {
             get {
                 return ResourceManager.GetString(ResourceNames.RoleNotFound, _resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'You cannot log out now. Please try again in a moment.'.
+        /// </summary>
+        public static string SignOutFailed {
+            get {
+                return ResourceManager.GetString(ResourceNames.SignOutFailed, _resourceCulture);
             }
         }
         
@@ -620,6 +638,15 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
+        /// Formats a localized string similar to '{0}'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        public static string InvalidTokenFormat(object arg0) {
+            return string.Format(_resourceCulture, InvalidToken, arg0);
+        }
+        
+        /// <summary>
         /// Formats a localized string similar to 'User name &apos;{0}&apos; is invalid, can only contain letters or digits.'.
         /// </summary>
         /// <param name="arg0">An object (0) to format.</param>
@@ -741,6 +768,11 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
             public const string DuplicateUserName = "DuplicateUserName";
             
             /// <summary>
+            /// Stores the resource name 'InvalidCredentials'.
+            /// </summary>
+            public const string InvalidCredentials = "InvalidCredentials";
+            
+            /// <summary>
             /// Stores the resource name 'InvalidEmail'.
             /// </summary>
             public const string InvalidEmail = "InvalidEmail";
@@ -854,6 +886,11 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
             /// Stores the resource name 'RoleNotFound'.
             /// </summary>
             public const string RoleNotFound = "RoleNotFound";
+            
+            /// <summary>
+            /// Stores the resource name 'SignOutFailed'.
+            /// </summary>
+            public const string SignOutFailed = "SignOutFailed";
             
             /// <summary>
             /// Stores the resource name 'StoreNotIProtectedUserStore'.

@@ -9,6 +9,7 @@ namespace Maktoob.Persistance
         public static void AddPersistence(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserLoginRepository, UserLoginRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 

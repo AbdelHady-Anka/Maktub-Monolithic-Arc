@@ -15,6 +15,9 @@ namespace Maktoob.Domain.Repositories
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
+        Task AddAsync(IEnumerable<TEntity> entities);
+        Task UpdateAsync(IEnumerable<TEntity> entities);
+        Task DeleteAsync(IEnumerable<TEntity> entities);
     }
 
 }

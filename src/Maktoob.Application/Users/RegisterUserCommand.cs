@@ -8,7 +8,7 @@ using Maktoob.Domain.Services;
 
 namespace Maktoob.Application.Users
 {
-    public class RegisterUserCommand : ICommand<MaktoobResult>
+    public class RegisterUserCommand : ICommand<GResult>
     {
         [Required]
         public string UserName { get; set; }
@@ -19,7 +19,7 @@ namespace Maktoob.Application.Users
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public class Handler : ICommandHandler<RegisterUserCommand, MaktoobResult>
+        public class Handler : ICommandHandler<RegisterUserCommand, GResult>
         {
             private readonly IUserService _userService;
 
@@ -28,7 +28,7 @@ namespace Maktoob.Application.Users
                 _userService = userService;
             }
 
-            public async Task<MaktoobResult> HandleAsync(RegisterUserCommand command)
+            public async Task<GResult> HandleAsync(RegisterUserCommand command)
             {
                 var user = new User
                 {

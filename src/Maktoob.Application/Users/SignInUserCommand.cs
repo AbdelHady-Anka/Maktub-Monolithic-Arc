@@ -3,6 +3,7 @@ using Maktoob.CrossCuttingConcerns.Error;
 using Maktoob.CrossCuttingConcerns.Result;
 using Maktoob.Domain.Entities;
 using Maktoob.Domain.Infrastructure;
+using Maktoob.Domain.Services;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,54 +14,44 @@ using System.Threading.Tasks;
 
 namespace Maktoob.Application.Users
 {
-    public class SignInUserCommand : ICommand<MaktoobResult>
+    public class SignInUserCommand : ICommand<GResult>
     {
         [Required]
-        public string UserName { get; set; }
+        public string Credentials { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        public bool RememberMe { get; set; } = false;
+        [Required]
+        public bool EmailCredentials { get; set; }
+        public bool RememberMe { get; set; }
+        public string OperatingSystem { get; set; }
+        public string Browser { get; set; }
+        public string Device { get; set; }
+        public string UserAgent { get; set; }
+        public string OperatingSystemVersion { get; set; }
 
-        public class Handler : ICommandHandler<SignInUserCommand, MaktoobResult>
+
+
+        public class Handler : ICommandHandler<SignInUserCommand, GResult>
         {
-            private readonly SignInManager<User> _signInManager;
-            private readonly IJsonWebTokenCoder _jsonWebTokenCoder;
-            private readonly ErrorDescriber _errorDescriber;
+            private readonly ISignInService _signInService;
 
-            public Handler(SignInManager<User> signInManager, IJsonWebTokenCoder jsonWebTokenCoder, ErrorDescriber errorDescriber)
+            public Handler(ISignInService signInAsync)
             {
-                _signInManager = signInManager;
-                _jsonWebTokenCoder = jsonWebTokenCoder;
-                _errorDescriber = errorDescriber;
+                _signInService = signInAsync;
             }
 
-            public async Task<MaktoobResult> HandleAsync(SignInUserCommand command)
+            public async Task<GResult> HandleAsync(SignInUserCommand command)
             {
+                var userLogin = new UserLogin { 
+                    Browser = command.Browser, 
+                    Device = command.Device, 
+                    OperatingSystem = command.OperatingSystem, 
+                    UserAgent = command.UserAgent };
 
-                var user = await _signInManager.UserManager.FindByNameAsync(command.UserName);
-                if (user != null)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(user, command.Password, command.RememberMe, true);
+                var result = await _signInService.SignInAsync(command.Credentials, command.Password, userLogin, command.EmailCredentials);
 
-                    if (result.Succeeded)
-                    {
-                        var claims = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                            new Claim(ClaimTypes.Name, command.UserName)
-                        };
-
-                        var token = _jsonWebTokenCoder.Encode(claims);
-
-                        return MaktoobResult<string>.Success(token);
-                    }
-                    else
-                    {
-                        return MaktoobResult.Failed(new MaktoobError { Code = "SignInFailur", Description = "SignInFailur" });
-                    }
-                }
-                return MaktoobResult.Failed();
+                return result;
             }
         }
     }

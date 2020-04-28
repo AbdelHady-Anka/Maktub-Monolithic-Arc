@@ -10,7 +10,7 @@ namespace Maktoob.Application.Decorators
 {
     public class AuditLoggingDecorator<TCommand, TResult> : ICommandHandler<TCommand, TResult>
         where TCommand : ICommand<TResult>
-        where TResult : MaktoobResult
+        where TResult : GResult
     {
         private readonly ICommandHandler<TCommand, TResult> _handler;
 

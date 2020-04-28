@@ -4,6 +4,7 @@ using Maktoob.CrossCuttingConcerns.Normalizers;
 using Maktoob.CrossCuttingConcerns.Result;
 using Maktoob.Domain.Entities;
 using Maktoob.Domain.Services;
+using Maktoob.Domain.Specifications;
 using Maktoob.Domain.Validators;
 using Maktoob.Infrastructure.Security;
 using Maktoob.Persistance.Contexts;
@@ -21,17 +22,16 @@ namespace Maktoob.FunctionalTests
     public class UserServiceTest
     {
         private readonly IUserService _userService;
-        private readonly MaktoobErrorDescriber _errorDescriber;
-
+        private readonly GErrorDescriber _errorDescriber;
         public UserServiceTest()
         {
             var context = new MaktoobDbContext(new DbContextOptionsBuilder<MaktoobDbContext>().UseInMemoryDatabase("MaktoobDb").Options);
-            _errorDescriber = new MaktoobErrorDescriber();
+            _errorDescriber = new GErrorDescriber();
             var keyNormalizer = new NameNormalizer();
             var passwordHasher = new PasswordHasher();
             var unitOfWork = new UnitOfWork(context);
             var userRepository = new UserRepository(context);
-            var userValidator = new UserValidator(userRepository, keyNormalizer, _errorDescriber);
+            var userValidator = new IValidator<User>[] { new UserValidator(userRepository, keyNormalizer, _errorDescriber) };
             _userService = new UserService(userRepository, unitOfWork, _errorDescriber, keyNormalizer, passwordHasher, userValidator);
         }
 
@@ -45,7 +45,7 @@ namespace Maktoob.FunctionalTests
 
             var result = await _userService.CreateAsync(user);
 
-            Assert.Equal(MaktoobResult.Success, result);
+            Assert.Equal(GResult.Success, result);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Maktoob.FunctionalTests
             var result2 = await _userService.CreateAsync(user2);
 
             // Assert
-            Assert.Equal(MaktoobResult.Failed(_errorDescriber.DuplicateUserName(user2.Name)), result2);
+            Assert.Equal(GResult.Failed(_errorDescriber.DuplicateUserName(user2.Name)), result2);
         }
 
         [Fact]
@@ -79,11 +79,27 @@ namespace Maktoob.FunctionalTests
             var result2 = await _userService.CreateAsync(user2);
 
             // Assert
-            Assert.Equal(MaktoobResult.Failed(_errorDescriber.DuplicateEmail(user2.Email)), result2);
+            Assert.Equal(GResult.Failed(_errorDescriber.DuplicateEmail(user2.Email)), result2);
+        }
+        [Fact]
+        public async void CreateDublicateNameAndEmailNotAllowed()
+        {
+            // Arrange
+            var user1 = new User { Name = "user1", Email = "user1@mail.com" };
+            var user2 = new User { Name = "user1", Email = "user1@mail.com" };
+            user1.PasswordHash = _userService.PasswordHasher.Hash("user1_password");
+            user2.PasswordHash = _userService.PasswordHasher.Hash("user2_password");
+
+            // Act
+            var result1 = await _userService.CreateAsync(user1);
+            var result2 = await _userService.CreateAsync(user2);
+
+            // Assert
+            Assert.Equal(GResult.Failed(_errorDescriber.DuplicateUserName(user2.Name), _errorDescriber.DuplicateEmail(user2.Email)), result2);
         }
 
         [Fact]
-        public async void CreateDublicateInvalidPasswordHashNotAllowed()
+        public async void CreateWithInvalidPasswordHashNotAllowed()
         {
             // Arrange
             var user = new User { Name = "user1", Email = "user1@mail.com" };
@@ -92,6 +108,26 @@ namespace Maktoob.FunctionalTests
 
             // Assert
             await Assert.ThrowsAsync<InvalidPasswordHashException>(act);
+        }
+
+        [Fact]
+        public async void ReadExistingUserSuccess()
+        {
+            // Arrange
+            var user1 = new User { Name = "user1", Email = "user1@mail.com" };
+            var user2 = new User { Name = "user1", Email = "user1@mail.com" };
+            user1.PasswordHash = _userService.PasswordHasher.Hash("user1_password");
+            user2.PasswordHash = _userService.PasswordHasher.Hash("user2_password");
+
+
+            // Act
+            await _userService.CreateAsync(user1);
+            await _userService.CreateAsync(user2);
+
+            var result = await _userService.ReadAsync(new FindByNameSpec<User>(user1.Name, _userService.KeyNormalizer));
+
+            // Assert
+            Assert.Equal(GResult.Success, result);
         }
     }
 

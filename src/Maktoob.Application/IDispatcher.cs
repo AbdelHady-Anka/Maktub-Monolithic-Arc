@@ -10,7 +10,7 @@ namespace Maktoob.Application
 {
     public interface IDispatcher
     {
-        Task<T> DispatchAsync<T>(ICommand<T> command) where T : MaktoobResult;
+        Task<T> DispatchAsync<T>(ICommand<T> command) where T : GResult;
         Task<T> DispatchAsync<T>(IQuery<T> query) where T : class, new();
     }
 }

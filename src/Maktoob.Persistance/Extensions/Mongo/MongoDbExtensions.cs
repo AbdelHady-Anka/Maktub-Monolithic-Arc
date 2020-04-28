@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Maktoob.CrossCuttingConcerns.Settings;
+using Maktoob.CrossCuttingConcerns.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization.Conventions;
@@ -14,7 +14,7 @@ namespace Maktoob.Persistance.Extensions.Mongo
         {
             services.AddSingleton<IMongoClient>(serviceProvider =>
             {
-                var mongoDbSettings = serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>();
+                var mongoDbSettings = serviceProvider.GetRequiredService<IOptions<MongoDbOptions>>();
                 var mongoClient = new MongoClient(mongoDbSettings.Value.ConnectionString);
                 mongoClient.Settings.SslSettings = new SslSettings
                 {
@@ -24,7 +24,7 @@ namespace Maktoob.Persistance.Extensions.Mongo
             });
             services.AddScoped(serviceProvider =>
             {
-                var mongoDbSettings = serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>();
+                var mongoDbSettings = serviceProvider.GetRequiredService<IOptions<MongoDbOptions>>();
                 var mongoClient = serviceProvider.GetRequiredService<IMongoClient>();
                 return mongoClient.GetDatabase(mongoDbSettings.Value.DatabaseName);
             });

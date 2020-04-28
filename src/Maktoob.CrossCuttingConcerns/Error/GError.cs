@@ -1,23 +1,12 @@
-
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Maktoob.CrossCuttingConcerns.Error
 {
-    public static class IdentityErrorEthistensions
-    {
-        public static MaktoobError ToMaktoobError(this IdentityError identityError)
-        {
-            var maktoobError = new MaktoobError { Code = identityError.Code, Description = identityError.Description };
-
-            return maktoobError;
-        }
-    }
     /// <summary>
     /// Encapsulates an error from the Maktoob subsystem.
     /// </summary>
-    public class MaktoobError : IEquatable<MaktoobError>
+    public class GError : IEquatable<GError>
     {
         /// <summary>
         /// Gets or sets the code for this error.
@@ -35,7 +24,7 @@ namespace Maktoob.CrossCuttingConcerns.Error
         /// </value>
         public string Description { get; set; }
 
-        public bool Equals([AllowNull] MaktoobError other)
+        public bool Equals([AllowNull] GError other)
         {
             if (ReferenceEquals(this, null) && ReferenceEquals(other, null))
             {
