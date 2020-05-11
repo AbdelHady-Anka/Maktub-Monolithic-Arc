@@ -5,14 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material.module';
-import { UnprotectedModule } from './unprotected/unprotected.module';
-import { ProtectedModule } from './protected/protected.module';
-import { NotfoundComponent } from './notfound/notfound.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AuthModule } from './auth/auth.module';
+import { RootModule } from './root/root.module';
+import { ErrorModule } from './error/error.module';
+import { HttpInterceptorProviders } from './core/interceptors';
+import { IStorageService, StorageService } from './core/services/storage.service';
+import { LangFacade, ILangFacade } from './core/facades/lang.facade';
+import { ServiceProviders } from './core/services';
+import { IAuthFacade, AuthFacade } from './core/facades/auth.facade';
 
 
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -22,16 +26,14 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
 @NgModule({
    declarations: [
       AppComponent,
-      NotfoundComponent,
-      UnauthorizedComponent
    ],
    imports: [
       BrowserModule,
       AppRoutingModule,
       BrowserAnimationsModule,
       MaterialModule,
-      UnprotectedModule,
-      ProtectedModule,
+      AuthModule,
+      RootModule,
       HttpClientModule,
       ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
       TranslateModule.forRoot({
@@ -41,9 +43,16 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
             useFactory: TranslateHttpLoaderFactory,
             deps: [HttpClient]
          }
-      })
+      }),
+      ErrorModule,
    ],
-   providers: [],
+   providers: [
+      { provide: ILangFacade, useClass: LangFacade },
+      { provide: IStorageService, useClass: StorageService },
+      { provide: IAuthFacade, useClass: AuthFacade },
+      HttpInterceptorProviders,
+      ServiceProviders
+   ],
    bootstrap: [
       AppComponent
    ]

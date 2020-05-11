@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ProtectedRoutingModule } from './protected-routing.module';
+import { RootRoutingModule } from './root-routing.module';
 import { HomeComponent } from './home/home.component';
 import { MaterialModule } from '../shared/material.module';
 import { AccountModule } from './account/account.module';
-import { RegisterComponent } from '../unprotected/register/register.component';
 
 
 @NgModule({
@@ -14,9 +13,9 @@ import { RegisterComponent } from '../unprotected/register/register.component';
   ],
   imports: [
     CommonModule,
-    ProtectedRoutingModule,
+    RootRoutingModule,
     MaterialModule,
     AccountModule
   ]
 })
-export class ProtectedModule { }
+export class RootModule { }

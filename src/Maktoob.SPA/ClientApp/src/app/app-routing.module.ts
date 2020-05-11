@@ -1,44 +1,40 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { UnauthGuard } from './core/guards/unauth.guard';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
-      import('./unprotected/unprotected.module').then(
-        (m) => m.UnprotectedModule
+      import('./auth/auth.module').then(
+        (m) => m.AuthModule
       ),
     canLoad: [UnauthGuard]
   },
   {
-    path: 'notfound',
-    component: NotfoundComponent
-  },
-  {
-    path: 'unauth',
-    component: UnauthorizedComponent
+    path: 'error',
+    loadChildren: () => import('./error/error.module').then(
+      (m) => m.ErrorModule
+    )
   },
   {
     path: '',
     loadChildren: () =>
-      import('./protected/protected.module').then(
-        (m) => m.ProtectedModule
+      import('./root/root.module').then(
+        (m) => m.RootModule
       ),
     canLoad: [AuthGuard],
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'notfound',
+    redirectTo: 'error/notfound',
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, /* { enableTracing: true } */ )],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

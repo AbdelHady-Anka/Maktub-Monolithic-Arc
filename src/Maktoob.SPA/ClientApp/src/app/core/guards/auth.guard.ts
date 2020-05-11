@@ -19,7 +19,7 @@ export class AuthGuard implements CanLoad {
         this.router.navigateByUrl('/auth');
       }
       else {
-        this.router.navigateByUrl('/notfound');
+        this.router.navigateByUrl('/error/notfound');
       }
     }
     return au;

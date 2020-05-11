@@ -1,0 +1,58 @@
+{
+    "SignUp": {
+        "UserName": {
+            "Label": "Username",
+            "Hint": "You can use letters, numbers & periods",
+            "Errors": {
+                "required": "Enter username"
+            }
+        },
+        "Password": {
+            "Label": "Password",
+            "Hint": "Use 8 or more characters with a mix of letters, numbers & symbols.",
+            "Errors": {
+                "required": "Enter password"
+            }
+        },
+        "Email": {
+            "Label": "Email",
+            "Hint": "You'll need to confirm that this email belongs to you.",
+            "Errors": {
+                "required": "Enter email",
+                "email": "Not a valid email."
+            }
+        },
+        "FirstName": {
+            "Label": "First name",
+            "Hint": "",
+            "Errors": {
+                "required": "Enter first name"
+            }
+        },
+        "LastName": {
+            "Label": "Last name",
+            "Hint": "",
+            "Errors": {
+                "required": "Enter last name"
+            }
+        },
+        "SignUp": "Sign Up"
+    },
+    "SignIn": {
+        "UserName": {
+            "Label": "Username or Email",
+            "Hint": "You can use letters, numbers & periods",
+            "Errors": {
+                "required": "Enter username or email"
+            }
+        },
+        "Password": {
+            "Label": "Password",
+            "Hint": "Use 8 or more characters with a mix of letters, numbers & symbols.",
+            "Errors": {
+                "required": "Enter password"
+            }
+        },
+        "SignIn": "Sign In"
+    }
+}

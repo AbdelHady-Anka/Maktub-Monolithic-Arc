@@ -79,9 +79,15 @@ $Maktoob-theme: mat-light-theme(
 
 .rtl {
   direction: rtl;
+  & * {
+    direction: rtl;
+  }
 }
 .ltr {
   direction: ltr;
+  & * {
+    direction: ltr;
+  }
 }
 html,
 body {
