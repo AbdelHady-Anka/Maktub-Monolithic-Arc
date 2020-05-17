@@ -9,9 +9,11 @@ using Maktoob.Persistance.Extensions.Mongo;
 using Maktoob.SPA.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -188,10 +190,17 @@ namespace Maktoob.SPA
                 app.UseHttpsRedirection();
             }
 
-            app.UseStaticFiles();
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings[".webmanifest"] = "application/manifest+json";
+
+            app.UseStaticFiles(new StaticFileOptions {
+                ContentTypeProvider = provider
+            });
             if (!env.IsDevelopment())
             {
-                app.UseSpaStaticFiles();
+                app.UseSpaStaticFiles(new StaticFileOptions {
+                    ContentTypeProvider = provider
+                });
             }
 
             app.UseRouting();
@@ -220,7 +229,7 @@ namespace Maktoob.SPA
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
-
+                
                 spa.Options.SourcePath = "ClientApp";
                 
                 if (env.IsDevelopment())
