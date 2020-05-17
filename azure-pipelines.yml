@@ -23,10 +23,11 @@ steps:
 
 - script: dotnet ef database update --project ./src/Maktoob.Persistance/Maktoob.Persistance.csproj
   displayName:  'update sql database'
-
+  env:
+   DBConnectionString: $(DBConnectionString)
 - script: dotnet test --configuration $(buildConfiguration)
   displayName: 'dotnet test $(buildConfiguration)'
-
+  
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
