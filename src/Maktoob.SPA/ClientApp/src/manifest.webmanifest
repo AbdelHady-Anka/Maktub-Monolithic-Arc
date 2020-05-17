@@ -1,7 +1,7 @@
 {
   "name": "Maktoob",
   "short_name": "Maktoob",
-  "theme_color": "#1976d2",
+  "theme_color": "#00b726",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
