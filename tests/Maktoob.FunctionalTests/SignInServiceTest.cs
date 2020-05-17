@@ -187,7 +187,7 @@ namespace Maktoob.FunctionalTests
             // Act
             var result1 = await _signInService.SignInAsync(username, password, new UserLogin { });
 
-            await Task.Delay(TimeSpan.FromSeconds(10)); // wait until refresh token expired
+            await Task.Delay(TimeSpan.FromSeconds(11)); // wait until refresh token expired
 
             var result2 = await _signInService.RefreshTokenAsync(result1.Outcome.AccessToken, result1.Outcome.RefreshToken);
 
