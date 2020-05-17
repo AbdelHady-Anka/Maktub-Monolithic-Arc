@@ -26,7 +26,8 @@ steps:
 
 - script: dotnet test --configuration $(buildConfiguration)
   displayName: 'dotnet test $(buildConfiguration)'
-
+  env:
+   DBConnectionString: $(DBConnectionString)
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
