@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Maktoob.Persistance.Migrations
 {
     [DbContext(typeof(MaktoobDbContext))]
-    [Migration("20200425143740_Add_UserLogin")]
-    partial class Add_UserLogin
+    [Migration("20200508143419_Add_UserLogin_Entity")]
+    partial class Add_UserLogin_Entity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,6 +93,9 @@ namespace Maktoob.Persistance.Migrations
 
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("JwtId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OperatingSystem")
                         .HasColumnType("nvarchar(max)");

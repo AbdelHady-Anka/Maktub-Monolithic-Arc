@@ -1,15 +1,8 @@
 ﻿using Maktoob.Application.Commands;
-using Maktoob.CrossCuttingConcerns.Error;
 using Maktoob.CrossCuttingConcerns.Result;
 using Maktoob.Domain.Entities;
-using Maktoob.Domain.Infrastructure;
 using Maktoob.Domain.Services;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Maktoob.Application.Users

@@ -1,5 +1,4 @@
 ﻿using Maktoob.Application.Commands;
-using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Maktoob.Domain.Entities;
 using Maktoob.CrossCuttingConcerns.Result;
@@ -8,7 +7,7 @@ using Maktoob.Domain.Services;
 
 namespace Maktoob.Application.Users
 {
-    public class RegisterUserCommand : ICommand<GResult>
+    public class SignUpUserCommand : ICommand<GResult>
     {
         [Required]
         public string UserName { get; set; }
@@ -18,17 +17,23 @@ namespace Maktoob.Application.Users
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
 
-        public class Handler : ICommandHandler<RegisterUserCommand, GResult>
+        public class Handler : ICommandHandler<SignUpUserCommand, GResult>
         {
             private readonly IUserService _userService;
+            private readonly ISignInService _signInService;
 
-            public Handler(IUserService userService)
+            public Handler(IUserService userService, ISignInService signInService)
             {
                 _userService = userService;
+                this._signInService = signInService;
             }
 
-            public async Task<GResult> HandleAsync(RegisterUserCommand command)
+            public async Task<GResult> HandleAsync(SignUpUserCommand command)
             {
                 var user = new User
                 {

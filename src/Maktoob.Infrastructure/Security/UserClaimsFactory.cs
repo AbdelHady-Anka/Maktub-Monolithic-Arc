@@ -1,4 +1,5 @@
-﻿using Maktoob.Domain.Entities;
+﻿using Maktoob.CrossCuttingConcerns.Security;
+using Maktoob.Domain.Entities;
 using Maktoob.Domain.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,9 @@ namespace Maktoob.Infrastructure.Security
 
             var claims = new Claim[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtClaimNames.NameId, user.Id.ToString()),
+                new Claim(JwtClaimNames.UniqueName, user.Name),
+                new Claim(JwtClaimNames.Jti, Guid.NewGuid().ToString())
             };
             return await Task.FromResult(claims);
         }

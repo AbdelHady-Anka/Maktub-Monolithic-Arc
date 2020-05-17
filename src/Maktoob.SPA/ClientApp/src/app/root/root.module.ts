@@ -5,11 +5,15 @@ import { RootRoutingModule } from './root-routing.module';
 import { HomeComponent } from './home/home.component';
 import { MaterialModule } from '../shared/material.module';
 import { AccountModule } from './account/account.module';
+import { NavComponent } from './nav/nav.component';
+import { RootComponent } from './root.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    NavComponent,
+    RootComponent
   ],
   imports: [
     CommonModule,

@@ -9,11 +9,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AuthComponent } from './auth.component';
-import { SignUpFacade, ISignUpFacade } from './facades/signup.facade';
 import { ILangFacade, LangFacade } from '../core/facades/lang.facade';
-import { FacadeProviders } from './facades';
+import { FacadeProviders } from './facades/facades';
 import { SignInComponent } from './signin/signin.component';
-
+import { NgxTranslateCutModule } from 'ngx-translate-cut';
 
 @NgModule({
   declarations: [SignUpComponent, AuthComponent, SignInComponent],
@@ -22,8 +21,8 @@ import { SignInComponent } from './signin/signin.component';
     AuthRoutingModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule,
     ReactiveFormsModule,
+    NgxTranslateCutModule,
     TranslateModule.forChild({
       extend: true,
       loader: {

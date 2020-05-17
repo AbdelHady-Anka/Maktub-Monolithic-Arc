@@ -114,15 +114,6 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
-        /// Looks up a localized string similar to 'Role name &apos;{0}&apos; is already taken.'.
-        /// </summary>
-        public static string DuplicateRoleName {
-            get {
-                return ResourceManager.GetString(ResourceNames.DuplicateRoleName, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Looks up a localized string similar to 'User name &apos;{0}&apos; is already taken.'.
         /// </summary>
         public static string DuplicateUserName {
@@ -146,42 +137,6 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         public static string InvalidEmail {
             get {
                 return ResourceManager.GetString(ResourceNames.InvalidEmail, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Type {0} must derive from {1}&lt;{2}&gt;.'.
-        /// </summary>
-        public static string InvalidManagerType {
-            get {
-                return ResourceManager.GetString(ResourceNames.InvalidManagerType, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'The provided PasswordHasherCompatibilityMode is invalid.'.
-        /// </summary>
-        public static string InvalidPasswordHasherCompatibilityMode {
-            get {
-                return ResourceManager.GetString(ResourceNames.InvalidPasswordHasherCompatibilityMode, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'The iteration count must be a positive integer.'.
-        /// </summary>
-        public static string InvalidPasswordHasherIterationCount {
-            get {
-                return ResourceManager.GetString(ResourceNames.InvalidPasswordHasherIterationCount, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Role name &apos;{0}&apos; is invalid.'.
-        /// </summary>
-        public static string InvalidRoleName {
-            get {
-                return ResourceManager.GetString(ResourceNames.InvalidRoleName, _resourceCulture);
             }
         }
         
@@ -213,137 +168,11 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
-        /// Looks up a localized string similar to 'AddIdentity must be called on the service collection.'.
-        /// </summary>
-        public static string MustCallAddIdentity {
-            get {
-                return ResourceManager.GetString(ResourceNames.MustCallAddIdentity, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'No IPersonalDataProtector service was registered, this is required when ProtectPersonalData = true.'.
-        /// </summary>
-        public static string NoPersonalDataProtector {
-            get {
-                return ResourceManager.GetString(ResourceNames.NoPersonalDataProtector, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'No RoleType was specified, try AddRoles&lt;TRole&gt;().'.
-        /// </summary>
-        public static string NoRoleType {
-            get {
-                return ResourceManager.GetString(ResourceNames.NoRoleType, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Looks up a localized string similar to 'No results found.'.
         /// </summary>
         public static string NotFound {
             get {
                 return ResourceManager.GetString(ResourceNames.NotFound, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'No IUserTwoFactorTokenProvider&lt;{0}&gt; named &apos;{1}&apos; is registered.'.
-        /// </summary>
-        public static string NoTokenProvider {
-            get {
-                return ResourceManager.GetString(ResourceNames.NoTokenProvider, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User security stamp cannot be null.'.
-        /// </summary>
-        public static string NullSecurityStamp {
-            get {
-                return ResourceManager.GetString(ResourceNames.NullSecurityStamp, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Incorrect password.'.
-        /// </summary>
-        public static string PasswordMismatch {
-            get {
-                return ResourceManager.GetString(ResourceNames.PasswordMismatch, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Passwords must have at least one digit (&apos;0&apos;-&apos;9&apos;).'.
-        /// </summary>
-        public static string PasswordRequiresDigit {
-            get {
-                return ResourceManager.GetString(ResourceNames.PasswordRequiresDigit, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Passwords must have at least one lowercase (&apos;a&apos;-&apos;z&apos;).'.
-        /// </summary>
-        public static string PasswordRequiresLower {
-            get {
-                return ResourceManager.GetString(ResourceNames.PasswordRequiresLower, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Passwords must have at least one non alphanumeric character.'.
-        /// </summary>
-        public static string PasswordRequiresNonAlphanumeric {
-            get {
-                return ResourceManager.GetString(ResourceNames.PasswordRequiresNonAlphanumeric, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Passwords must use at least {0} different characters.'.
-        /// </summary>
-        public static string PasswordRequiresUniqueChars {
-            get {
-                return ResourceManager.GetString(ResourceNames.PasswordRequiresUniqueChars, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Passwords must have at least one uppercase (&apos;A&apos;-&apos;Z&apos;).'.
-        /// </summary>
-        public static string PasswordRequiresUpper {
-            get {
-                return ResourceManager.GetString(ResourceNames.PasswordRequiresUpper, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Passwords must be at least {0} characters.'.
-        /// </summary>
-        public static string PasswordTooShort {
-            get {
-                return ResourceManager.GetString(ResourceNames.PasswordTooShort, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Recovery code redemption failed.'.
-        /// </summary>
-        public static string RecoveryCodeRedemptionFailed {
-            get {
-                return ResourceManager.GetString(ResourceNames.RecoveryCodeRedemptionFailed, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Role {0} does not exist.'.
-        /// </summary>
-        public static string RoleNotFound {
-            get {
-                return ResourceManager.GetString(ResourceNames.RoleNotFound, _resourceCulture);
             }
         }
         
@@ -357,246 +186,12 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IProtectedUserStore&lt;TUser&gt; which is required when ProtectPersonalData = true.'.
-        /// </summary>
-        public static string StoreNotIProtectedUserStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIProtectedUserStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IQueryableRoleStore&lt;TRole&gt;.'.
-        /// </summary>
-        public static string StoreNotIQueryableRoleStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIQueryableRoleStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IQueryableUserStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIQueryableUserStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIQueryableUserStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IRoleClaimStore&lt;TRole&gt;.'.
-        /// </summary>
-        public static string StoreNotIRoleClaimStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIRoleClaimStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserAuthenticationTokenStore&lt;User&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserAuthenticationTokenStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserAuthenticationTokenStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserAuthenticatorKeyStore&lt;User&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserAuthenticatorKeyStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserAuthenticatorKeyStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserClaimStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserClaimStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserClaimStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserConfirmationStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserConfirmationStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserConfirmationStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserEmailStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserEmailStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserEmailStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserLockoutStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserLockoutStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserLockoutStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserLoginStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserLoginStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserLoginStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserPasswordStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserPasswordStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserPasswordStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserPhoneNumberStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserPhoneNumberStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserPhoneNumberStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserRoleStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserRoleStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserRoleStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserSecurityStampStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserSecurityStampStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserSecurityStampStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserTwoFactorRecoveryCodeStore&lt;User&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserTwoFactorRecoveryCodeStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserTwoFactorRecoveryCodeStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Store does not implement IUserTwoFactorStore&lt;TUser&gt;.'.
-        /// </summary>
-        public static string StoreNotIUserTwoFactorStore {
-            get {
-                return ResourceManager.GetString(ResourceNames.StoreNotIUserTwoFactorStore, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User already has a password set.'.
-        /// </summary>
-        public static string UserAlreadyHasPassword {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserAlreadyHasPassword, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User already in group &apos;{0}&apos;.'.
-        /// </summary>
-        public static string UserAlreadyInGroup {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserAlreadyInGroup, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User already in role &apos;{0}&apos;.'.
-        /// </summary>
-        public static string UserAlreadyInRole {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserAlreadyInRole, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User is locked out.'.
-        /// </summary>
-        public static string UserLockedOut {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserLockedOut, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'Lockout is not enabled for this user.'.
-        /// </summary>
-        public static string UserLockoutNotEnabled {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserLockoutNotEnabled, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User {0} does not exist.'.
-        /// </summary>
-        public static string UserNameNotFound {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserNameNotFound, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User is not in group &apos;{0}&apos;.'.
-        /// </summary>
-        public static string UserNotInGroup {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserNotInGroup, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        /// Looks up a localized string similar to 'User is not in role &apos;{0}&apos;.'.
-        /// </summary>
-        public static string UserNotInRole {
-            get {
-                return ResourceManager.GetString(ResourceNames.UserNotInRole, _resourceCulture);
-            }
-        }
-        
-        /// <summary>
         /// Formats a localized string similar to 'Email &apos;{0}&apos; is already taken.'.
         /// </summary>
         /// <param name="arg0">An object (0) to format.</param>
         /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         public static string DuplicateEmailFormat(object arg0) {
             return string.Format(_resourceCulture, DuplicateEmail, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'Role name &apos;{0}&apos; is already taken.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string DuplicateRoleNameFormat(object arg0) {
-            return string.Format(_resourceCulture, DuplicateRoleName, arg0);
         }
         
         /// <summary>
@@ -618,26 +213,6 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         }
         
         /// <summary>
-        /// Formats a localized string similar to 'Type {0} must derive from {1}&lt;{2}&gt;.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <param name="arg1">An object (1) to format.</param>
-        /// <param name="arg2">An object (2) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string InvalidManagerTypeFormat(object arg0, object arg1, object arg2) {
-            return string.Format(_resourceCulture, InvalidManagerType, arg0, arg1, arg2);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'Role name &apos;{0}&apos; is invalid.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string InvalidRoleNameFormat(object arg0) {
-            return string.Format(_resourceCulture, InvalidRoleName, arg0);
-        }
-        
-        /// <summary>
         /// Formats a localized string similar to '{0}'.
         /// </summary>
         /// <param name="arg0">An object (0) to format.</param>
@@ -653,88 +228,6 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
         /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         public static string InvalidUserNameFormat(object arg0) {
             return string.Format(_resourceCulture, InvalidUserName, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'No IUserTwoFactorTokenProvider&lt;{0}&gt; named &apos;{1}&apos; is registered.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <param name="arg1">An object (1) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string NoTokenProviderFormat(object arg0, object arg1) {
-            return string.Format(_resourceCulture, NoTokenProvider, arg0, arg1);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'Passwords must use at least {0} different characters.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string PasswordRequiresUniqueCharsFormat(object arg0) {
-            return string.Format(_resourceCulture, PasswordRequiresUniqueChars, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'Passwords must be at least {0} characters.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string PasswordTooShortFormat(object arg0) {
-            return string.Format(_resourceCulture, PasswordTooShort, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'Role {0} does not exist.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string RoleNotFoundFormat(object arg0) {
-            return string.Format(_resourceCulture, RoleNotFound, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'User already in group &apos;{0}&apos;.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string UserAlreadyInGroupFormat(object arg0) {
-            return string.Format(_resourceCulture, UserAlreadyInGroup, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'User already in role &apos;{0}&apos;.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string UserAlreadyInRoleFormat(object arg0) {
-            return string.Format(_resourceCulture, UserAlreadyInRole, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'User {0} does not exist.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string UserNameNotFoundFormat(object arg0) {
-            return string.Format(_resourceCulture, UserNameNotFound, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'User is not in group &apos;{0}&apos;.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string UserNotInGroupFormat(object arg0) {
-            return string.Format(_resourceCulture, UserNotInGroup, arg0);
-        }
-        
-        /// <summary>
-        /// Formats a localized string similar to 'User is not in role &apos;{0}&apos;.'.
-        /// </summary>
-        /// <param name="arg0">An object (0) to format.</param>
-        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        public static string UserNotInRoleFormat(object arg0) {
-            return string.Format(_resourceCulture, UserNotInRole, arg0);
         }
         
         /// <summary>
@@ -758,11 +251,6 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
             public const string DuplicateEmail = "DuplicateEmail";
             
             /// <summary>
-            /// Stores the resource name 'DuplicateRoleName'.
-            /// </summary>
-            public const string DuplicateRoleName = "DuplicateRoleName";
-            
-            /// <summary>
             /// Stores the resource name 'DuplicateUserName'.
             /// </summary>
             public const string DuplicateUserName = "DuplicateUserName";
@@ -776,26 +264,6 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
             /// Stores the resource name 'InvalidEmail'.
             /// </summary>
             public const string InvalidEmail = "InvalidEmail";
-            
-            /// <summary>
-            /// Stores the resource name 'InvalidManagerType'.
-            /// </summary>
-            public const string InvalidManagerType = "InvalidManagerType";
-            
-            /// <summary>
-            /// Stores the resource name 'InvalidPasswordHasherCompatibilityMode'.
-            /// </summary>
-            public const string InvalidPasswordHasherCompatibilityMode = "InvalidPasswordHasherCompatibilityMode";
-            
-            /// <summary>
-            /// Stores the resource name 'InvalidPasswordHasherIterationCount'.
-            /// </summary>
-            public const string InvalidPasswordHasherIterationCount = "InvalidPasswordHasherIterationCount";
-            
-            /// <summary>
-            /// Stores the resource name 'InvalidRoleName'.
-            /// </summary>
-            public const string InvalidRoleName = "InvalidRoleName";
             
             /// <summary>
             /// Stores the resource name 'InvalidToken'.
@@ -813,209 +281,14 @@ namespace Maktoob.CrossCuttingConcerns.Properties {
             public const string LoginAlreadyAssociated = "LoginAlreadyAssociated";
             
             /// <summary>
-            /// Stores the resource name 'MustCallAddIdentity'.
-            /// </summary>
-            public const string MustCallAddIdentity = "MustCallAddIdentity";
-            
-            /// <summary>
-            /// Stores the resource name 'NoPersonalDataProtector'.
-            /// </summary>
-            public const string NoPersonalDataProtector = "NoPersonalDataProtector";
-            
-            /// <summary>
-            /// Stores the resource name 'NoRoleType'.
-            /// </summary>
-            public const string NoRoleType = "NoRoleType";
-            
-            /// <summary>
             /// Stores the resource name 'NotFound'.
             /// </summary>
             public const string NotFound = "NotFound";
             
             /// <summary>
-            /// Stores the resource name 'NoTokenProvider'.
-            /// </summary>
-            public const string NoTokenProvider = "NoTokenProvider";
-            
-            /// <summary>
-            /// Stores the resource name 'NullSecurityStamp'.
-            /// </summary>
-            public const string NullSecurityStamp = "NullSecurityStamp";
-            
-            /// <summary>
-            /// Stores the resource name 'PasswordMismatch'.
-            /// </summary>
-            public const string PasswordMismatch = "PasswordMismatch";
-            
-            /// <summary>
-            /// Stores the resource name 'PasswordRequiresDigit'.
-            /// </summary>
-            public const string PasswordRequiresDigit = "PasswordRequiresDigit";
-            
-            /// <summary>
-            /// Stores the resource name 'PasswordRequiresLower'.
-            /// </summary>
-            public const string PasswordRequiresLower = "PasswordRequiresLower";
-            
-            /// <summary>
-            /// Stores the resource name 'PasswordRequiresNonAlphanumeric'.
-            /// </summary>
-            public const string PasswordRequiresNonAlphanumeric = "PasswordRequiresNonAlphanumeric";
-            
-            /// <summary>
-            /// Stores the resource name 'PasswordRequiresUniqueChars'.
-            /// </summary>
-            public const string PasswordRequiresUniqueChars = "PasswordRequiresUniqueChars";
-            
-            /// <summary>
-            /// Stores the resource name 'PasswordRequiresUpper'.
-            /// </summary>
-            public const string PasswordRequiresUpper = "PasswordRequiresUpper";
-            
-            /// <summary>
-            /// Stores the resource name 'PasswordTooShort'.
-            /// </summary>
-            public const string PasswordTooShort = "PasswordTooShort";
-            
-            /// <summary>
-            /// Stores the resource name 'RecoveryCodeRedemptionFailed'.
-            /// </summary>
-            public const string RecoveryCodeRedemptionFailed = "RecoveryCodeRedemptionFailed";
-            
-            /// <summary>
-            /// Stores the resource name 'RoleNotFound'.
-            /// </summary>
-            public const string RoleNotFound = "RoleNotFound";
-            
-            /// <summary>
             /// Stores the resource name 'SignOutFailed'.
             /// </summary>
             public const string SignOutFailed = "SignOutFailed";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIProtectedUserStore'.
-            /// </summary>
-            public const string StoreNotIProtectedUserStore = "StoreNotIProtectedUserStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIQueryableRoleStore'.
-            /// </summary>
-            public const string StoreNotIQueryableRoleStore = "StoreNotIQueryableRoleStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIQueryableUserStore'.
-            /// </summary>
-            public const string StoreNotIQueryableUserStore = "StoreNotIQueryableUserStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIRoleClaimStore'.
-            /// </summary>
-            public const string StoreNotIRoleClaimStore = "StoreNotIRoleClaimStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserAuthenticationTokenStore'.
-            /// </summary>
-            public const string StoreNotIUserAuthenticationTokenStore = "StoreNotIUserAuthenticationTokenStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserAuthenticatorKeyStore'.
-            /// </summary>
-            public const string StoreNotIUserAuthenticatorKeyStore = "StoreNotIUserAuthenticatorKeyStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserClaimStore'.
-            /// </summary>
-            public const string StoreNotIUserClaimStore = "StoreNotIUserClaimStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserConfirmationStore'.
-            /// </summary>
-            public const string StoreNotIUserConfirmationStore = "StoreNotIUserConfirmationStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserEmailStore'.
-            /// </summary>
-            public const string StoreNotIUserEmailStore = "StoreNotIUserEmailStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserLockoutStore'.
-            /// </summary>
-            public const string StoreNotIUserLockoutStore = "StoreNotIUserLockoutStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserLoginStore'.
-            /// </summary>
-            public const string StoreNotIUserLoginStore = "StoreNotIUserLoginStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserPasswordStore'.
-            /// </summary>
-            public const string StoreNotIUserPasswordStore = "StoreNotIUserPasswordStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserPhoneNumberStore'.
-            /// </summary>
-            public const string StoreNotIUserPhoneNumberStore = "StoreNotIUserPhoneNumberStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserRoleStore'.
-            /// </summary>
-            public const string StoreNotIUserRoleStore = "StoreNotIUserRoleStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserSecurityStampStore'.
-            /// </summary>
-            public const string StoreNotIUserSecurityStampStore = "StoreNotIUserSecurityStampStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserTwoFactorRecoveryCodeStore'.
-            /// </summary>
-            public const string StoreNotIUserTwoFactorRecoveryCodeStore = "StoreNotIUserTwoFactorRecoveryCodeStore";
-            
-            /// <summary>
-            /// Stores the resource name 'StoreNotIUserTwoFactorStore'.
-            /// </summary>
-            public const string StoreNotIUserTwoFactorStore = "StoreNotIUserTwoFactorStore";
-            
-            /// <summary>
-            /// Stores the resource name 'UserAlreadyHasPassword'.
-            /// </summary>
-            public const string UserAlreadyHasPassword = "UserAlreadyHasPassword";
-            
-            /// <summary>
-            /// Stores the resource name 'UserAlreadyInGroup'.
-            /// </summary>
-            public const string UserAlreadyInGroup = "UserAlreadyInGroup";
-            
-            /// <summary>
-            /// Stores the resource name 'UserAlreadyInRole'.
-            /// </summary>
-            public const string UserAlreadyInRole = "UserAlreadyInRole";
-            
-            /// <summary>
-            /// Stores the resource name 'UserLockedOut'.
-            /// </summary>
-            public const string UserLockedOut = "UserLockedOut";
-            
-            /// <summary>
-            /// Stores the resource name 'UserLockoutNotEnabled'.
-            /// </summary>
-            public const string UserLockoutNotEnabled = "UserLockoutNotEnabled";
-            
-            /// <summary>
-            /// Stores the resource name 'UserNameNotFound'.
-            /// </summary>
-            public const string UserNameNotFound = "UserNameNotFound";
-            
-            /// <summary>
-            /// Stores the resource name 'UserNotInGroup'.
-            /// </summary>
-            public const string UserNotInGroup = "UserNotInGroup";
-            
-            /// <summary>
-            /// Stores the resource name 'UserNotInRole'.
-            /// </summary>
-            public const string UserNotInRole = "UserNotInRole";
         }
     }
 }

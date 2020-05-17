@@ -6,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
@@ -18,6 +19,6 @@ export class DefaultInterceptor implements HttpInterceptor {
         body: {}
       })
     }
-    return next.handle(request);
+    return next.handle(request)
   }
 }

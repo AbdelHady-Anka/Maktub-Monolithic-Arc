@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Maktoob.Persistance.Migrations
 {
-    public partial class Add_UserLogin : Migration
+    public partial class Add_UserLogin_Entity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,6 +40,7 @@ namespace Maktoob.Persistance.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     RefreshToken = table.Column<string>(nullable: true),
+                    JwtId = table.Column<string>(nullable: true),
                     ExpiryDate = table.Column<DateTime>(nullable: false),
                     RequiredUpdateDate = table.Column<DateTime>(nullable: false),
                     OperatingSystem = table.Column<string>(nullable: true),

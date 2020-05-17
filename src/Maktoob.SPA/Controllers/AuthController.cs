@@ -7,27 +7,31 @@ using System.Threading.Tasks;
 using Maktoob.Application;
 using Maktoob.Application.Users;
 using Maktoob.CrossCuttingConcerns.Result;
+using Maktoob.CrossCuttingConcerns.Security;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 
 namespace Maktoob.SPA.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    //[Produces("application/json")]
+    //[Consumes("application/json")]
+    public class AuthController : ControllerBase
     {
         private readonly IDispatcher _dispatcher;
-        public UsersController(IDispatcher dispatcher)
+        public AuthController(IDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
         }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
+        //[SwaggerResponse(200, typeof(GResult))]
+        [HttpPost]
+        public async Task<IActionResult> SignUp([FromBody] SignUpUserCommand command)
         {
             var result = await _dispatcher.DispatchAsync(command);
 
@@ -41,7 +45,7 @@ namespace Maktoob.SPA.Controllers
             }
         }
 
-        [HttpPost("signIn")]
+        [HttpPost]
         public async Task<IActionResult> SignIn([FromBody] SignInUserCommand command)
         {
             var result = await _dispatcher.DispatchAsync(command);
@@ -56,7 +60,7 @@ namespace Maktoob.SPA.Controllers
             }
         }
 
-        [HttpPost("refreshToken")]
+        [HttpPost]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand command)
         {
             var result = await _dispatcher.DispatchAsync(command);
@@ -70,12 +74,12 @@ namespace Maktoob.SPA.Controllers
             }
         }
 
-        [HttpPost("signOut")]
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> SignOut([FromBody] SignOutUserCommand command)
         {
             command.UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            command.JwtId = User.FindFirstValue(JwtRegisteredClaimNames.Jti);
+            command.JwtId = User.FindFirstValue(JwtClaimNames.Jti);
             var result = await _dispatcher.DispatchAsync(command);
             if (result.Succeeded)
             {
@@ -85,34 +89,14 @@ namespace Maktoob.SPA.Controllers
             {
                 return BadRequest(result);
             }
-        }   
+        }
 
-        // GET: api/User
+        // Only for the purpose of checking
         [HttpGet]
         [Authorize]
-        public IEnumerable<string> Get()
+        public OkResult IsAuthorized()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-        // POST: api/User
-        
-        // PUT: api/User/5
-        [HttpPatch("{id}")]
-        public void Put(int id, [FromBody] JsonPatchDocument value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok();
         }
     }
 }

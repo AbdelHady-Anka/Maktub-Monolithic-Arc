@@ -2,6 +2,8 @@ export interface SignUpUserCommand {
     UserName: string;
     Email: string;
     Password: string;
+    FirstName: string;
+    LastName: string;
 }
 
 
@@ -10,18 +12,18 @@ export interface SignInUserCommand {
     Password: string;
     EmailCredentials: boolean;
     RememberMe?: boolean;
-    OperatingSystem?: string | undefined;
-    Browser?: string | undefined;
-    Device?: string | undefined;
-    UserAgent?: string | undefined;
-    OperatingSystemVersion?: string | undefined;
+    OperatingSystem?: string;
+    Browser?: string;
+    Device?: string;
+    UserAgent?: string;
+    OperatingSystemVersion?: string;
 }
 
 
 export interface SignOutUserCommand {
     UserId?: string;
-    JwtId?: string | undefined;
-    RefreshToken?: string | undefined;
+    JwtId?: string;
+    RefreshToken: string;
     LogOutAll?: boolean;
 }
 

@@ -10,33 +10,50 @@
                 <div class="col-10 m-auto">
                     <div class="row mb-2">
                         <mat-form-field appearance="outline" class="col-12">
-                            <mat-label>{{ 'SignIn.UserName.Label' | translate }}</mat-label>
-                            <input matInput formControlName="credentials">
-                            <mat-error *ngFor="let error of vm.CredentialsErrors"> {{ error.Description }}</mat-error>
-                            <mat-hint>{{ 'SignIn.UserName.Hint' | translate }}</mat-hint>
+                            <mat-label>{{ 'SignIn.Credentials.Label' | translate }}</mat-label>
+                            <input matInput formControlName="Credentials" name="UserName" id="UserName">
+                            <mat-error *ngFor="let error of vm.CredentialsErrors">
+                                {{ error?.Description || ( 'SignIn.Credentials.Errors.' + error?.Code | translate) }}
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="col-10 m-auto">
                     <div class="row mb-2">
                         <mat-form-field appearance="outline" class="col-12">
-                            <mat-label>{{ 'SignIn.Password.Label' | translate }}</mat-label>
-                            <input matInput formControlName="password">
-                            <mat-error *ngFor="let error of vm.PasswordErrors"> {{ error.Description }}</mat-error>
-                            <mat-hint>{{ 'SignIn.Password.Hint' | translate }}</mat-hint>
+                            <mat-label>
+                                {{'SignIn.Password.Label' | translate}}
+                            </mat-label>
+                            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="Password">
+                            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                                [attr.aria-label]="'hide password'" [attr.aria-pressed]="hidePassword">
+                                <mat-icon>
+                                    {{hidePassword ? 'visibility_off' : 'visibility'}}
+                                </mat-icon>
+                            </button>
+                            <mat-error *ngFor="let error of vm.PasswordErrors">
+                                {{ error?.Description || ( 'SignIn.Password.Errors.' + error?.Code | translate) }}
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <div class="row">
-                <div class="col-12 text-center">
-                    <div class="m-auto">
-                        <button (click)="SignInAsync()" mat-flat-button  color="primary">
+            <div class="row text-center">
+                <div class="col-10 m-auto">
+                    <div class="row d-flex justify-content-between">
+                        <a mat-button [routerLink]="['/auth/signup']" class="mr-auto" color="primary"
+                            class="align-self-start">
+                            {{ 'SignIn.SignUpLink' | translate }}
+                        </a>
+
+                        <button (click)="SignInAsync()" mat-flat-button color="primary" class="align-self-end"
+                            [disabled]="signInForm.invalid">
                             {{ 'SignIn.SignIn' | translate}}
                         </button>
                     </div>
+
                 </div>
             </div>
         </mat-card-actions>

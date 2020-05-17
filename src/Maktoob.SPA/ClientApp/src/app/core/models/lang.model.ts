@@ -1,4 +1,4 @@
-export class Lang {
+export class LangModel {
     key?: string;
     val?: string;
     name?: string;

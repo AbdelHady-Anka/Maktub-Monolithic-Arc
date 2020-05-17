@@ -1,6 +1,6 @@
 import { GError } from 'src/app/core/results/error';
 
-export interface SignInModel {
+export interface SignInState {
     CredentialsErrors?: GError[];
     PasswordErrors?: GError[];
 }

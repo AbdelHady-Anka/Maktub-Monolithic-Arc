@@ -107,16 +107,39 @@ namespace Maktoob.FunctionalTests
 
             await Task.Delay(TimeSpan.FromSeconds(1)); // wait until token expired
 
-            var result2 = await _signInService.RefreshTokenAsync(result1.Outcome.Token, result1.Outcome.RefreshToken);
+            var result2 = await _signInService.RefreshTokenAsync(result1.Outcome.AccessToken, result1.Outcome.RefreshToken);
+            await Task.Delay(TimeSpan.FromSeconds(1)); // wait until token expired
+
+            var result3 = await _signInService.RefreshTokenAsync(result2.Outcome.AccessToken, result2.Outcome.RefreshToken);
+            await Task.Delay(TimeSpan.FromSeconds(1)); // wait until token expired
+
+            var result4 = await _signInService.RefreshTokenAsync(result3.Outcome.AccessToken, result3.Outcome.RefreshToken);
+            await Task.Delay(TimeSpan.FromSeconds(1)); // wait until token expired
+
+            var result5 = await _signInService.RefreshTokenAsync(result4.Outcome.AccessToken, result4.Outcome.RefreshToken);
+            await Task.Delay(TimeSpan.FromSeconds(1)); // wait until token expired
 
             // Assert
             Assert.Equal(GResult.Success, result1);
-            Assert.Equal(GResult.Success, result2);
-            Assert.NotNull(result2.Outcome);
-            Assert.NotNull(result2.Outcome.Token);
-            Assert.NotEmpty(result2.Outcome.Token);
-            Assert.NotEqual(result1.Outcome.Token, result2.Outcome.Token);
-            Assert.Equal(result1.Outcome.RefreshToken, result2.Outcome.RefreshToken);
+            Assert.Equal(GResult.Success, result5);
+            Assert.NotNull(result5.Outcome);
+            Assert.NotNull(result5.Outcome.AccessToken);
+            Assert.NotEmpty(result5.Outcome.AccessToken);
+            Assert.NotEqual(result1.Outcome.AccessToken, result5.Outcome.AccessToken);
+            Assert.Equal(result1.Outcome.RefreshToken, result5.Outcome.RefreshToken); // Before refresh token requires an update, must be equal
+
+            // here refresh token will be updated
+            var result6 = await _signInService.RefreshTokenAsync(result5.Outcome.AccessToken, result5.Outcome.RefreshToken);
+
+
+            // Assert
+            Assert.Equal(GResult.Success, result1);
+            Assert.Equal(GResult.Success, result6);
+            Assert.NotNull(result6.Outcome);
+            Assert.NotNull(result6.Outcome.AccessToken);
+            Assert.NotEmpty(result6.Outcome.AccessToken);
+            Assert.NotEqual(result1.Outcome.AccessToken, result6.Outcome.AccessToken);
+            Assert.NotEqual(result1.Outcome.RefreshToken, result6.Outcome.RefreshToken);// after updating refresh token, must be not equal
 
         }
 
@@ -136,15 +159,15 @@ namespace Maktoob.FunctionalTests
 
             await Task.Delay(TimeSpan.FromSeconds(5)); // wait until refresh token required update
 
-            var result2 = await _signInService.RefreshTokenAsync(result1.Outcome.Token, result1.Outcome.RefreshToken);
+            var result2 = await _signInService.RefreshTokenAsync(result1.Outcome.AccessToken, result1.Outcome.RefreshToken);
 
             // Assert
             Assert.Equal(GResult.Success, result1);
             Assert.Equal(GResult.Success, result2);
             Assert.NotNull(result2.Outcome);
-            Assert.NotNull(result2.Outcome.Token);
-            Assert.NotEmpty(result2.Outcome.Token);
-            Assert.NotEqual(result1.Outcome.Token, result2.Outcome.Token);
+            Assert.NotNull(result2.Outcome.AccessToken);
+            Assert.NotEmpty(result2.Outcome.AccessToken);
+            Assert.NotEqual(result1.Outcome.AccessToken, result2.Outcome.AccessToken);
             Assert.NotEqual(result1.Outcome.RefreshToken, result2.Outcome.RefreshToken);
         }
 
@@ -166,7 +189,7 @@ namespace Maktoob.FunctionalTests
 
             await Task.Delay(TimeSpan.FromSeconds(10)); // wait until refresh token expired
 
-            var result2 = await _signInService.RefreshTokenAsync(result1.Outcome.Token, result1.Outcome.RefreshToken);
+            var result2 = await _signInService.RefreshTokenAsync(result1.Outcome.AccessToken, result1.Outcome.RefreshToken);
 
             // Assert
             Assert.Equal(GResult.Success, result1);

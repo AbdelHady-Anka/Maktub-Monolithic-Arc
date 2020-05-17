@@ -6,15 +6,20 @@ using Maktoob.Infrastructure;
 using Maktoob.Persistance;
 using Maktoob.Persistance.Contexts;
 using Maktoob.Persistance.Extensions.Mongo;
+using Maktoob.SPA.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
+using NSwag;
+using NSwag.Generation.Processors.Security;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
 
 namespace Maktoob.SPA
 {
@@ -34,6 +39,20 @@ namespace Maktoob.SPA
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.SupportedCultures = new List<CultureInfo> {
+                    new CultureInfo("en"),
+                    new CultureInfo("ar"),
+                };
+            });
+
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                });
             //services.AddIdentityCore<User>(options =>
             //{
 
@@ -65,7 +84,7 @@ namespace Maktoob.SPA
             //    .AddEntityFrameworkStores<MaktoobDbContext>();
             //services.AddIdentity<User, Role>(options =>
             //{
-                
+
             //    // Password settings.
             //    options.Password.RequireDigit = true;
             //    options.Password.RequireLowercase = true;
@@ -107,36 +126,56 @@ namespace Maktoob.SPA
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddSwaggerGen(options =>
+            services.AddOpenApiDocument(configure =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Maktoob API", Version = "v1" });
-                //var openApiSecurityScheme = new OpenApiSecurityScheme
-                //{
-                //    Description = "JWT Authorization header using the bearer scheme",
-                //    Name = "Authorization",
-                //    In = ParameterLocation.Header,
-                //    Type = SecuritySchemeType.ApiKey
-                //};
-                options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                configure.AddSecurity("Bearer", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
+                    Type = OpenApiSecuritySchemeType.ApiKey,
                     Scheme = "bearer",
                     BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
+                    In = OpenApiSecurityApiKeyLocation.Header,
                     Description = "JWT Authorization header using the Bearer scheme.",
                 });
-                //////Add Operation Specific Authorization///////
-                options.OperationFilter<AuthOperationFilter>();
-                //var openApiSecurityRequirement = new OpenApiSecurityRequirement();
-                //openApiSecurityRequirement.Add(openApiSecurityScheme, new List<string> { "Bearer" });
-                //options.AddSecurityRequirement(openApiSecurityRequirement);
+                configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("Bearer"));
+                configure.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Maktoob API";
+                };
             });
+            //    options =>
+            //{
+            //    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Maktoob API", Version = "v1" });
+            //    //var openApiSecurityScheme = new OpenApiSecurityScheme
+            //    //{
+            //    //    Description = "JWT Authorization header using the bearer scheme",
+            //    //    Name = "Authorization",
+            //    //    In = ParameterLocation.Header,
+            //    //    Type = SecuritySchemeType.ApiKey
+            //    //};
+            //    options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+            //    {
+            //        Name = "Authorization",
+            //        Type = SecuritySchemeType.ApiKey,
+            //        Scheme = "bearer",
+            //        BearerFormat = "JWT",
+            //        In = ParameterLocation.Header,
+            //        Description = "JWT Authorization header using the Bearer scheme.",
+            //    });
+            //    //////Add Operation Specific Authorization///////
+            //    options.OperationFilter<AuthOperationFilter>();
+            //    //var openApiSecurityRequirement = new OpenApiSecurityRequirement();
+            //    //openApiSecurityRequirement.Add(openApiSecurityScheme, new List<string> { "Bearer" });
+            //    //options.AddSecurityRequirement(openApiSecurityRequirement);
+            //}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<LangMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -148,7 +187,7 @@ namespace Maktoob.SPA
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
-            
+
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
@@ -158,15 +197,18 @@ namespace Maktoob.SPA
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSwagger(options =>
-            {
-                options.RouteTemplate = "swagger/{documentname}/swagger.json";
-            });
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+            app.UseReDoc();
+            //app.UseSwagger(options =>
+            //{
+            //    options.RouteTemplate = "swagger/{documentname}/swagger.json";
+            //});
 
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("v1/swagger.json", "Maktoob API");
-            });
+            //app.UseSwaggerUi3(options =>
+            //{
+            //    options.SwaggerEndpoint("v1/swagger.json", "Maktoob API");
+            //});
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -174,18 +216,18 @@ namespace Maktoob.SPA
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
-            //app.UseSpa(spa =>
-            //{
-            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-            //    // see https://go.microsoft.com/fwlink/?linkid=864501
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
 
-            //    spa.Options.SourcePath = "ClientApp";
-
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-            //    }
-            //});
+                spa.Options.SourcePath = "ClientApp";
+                
+                if (env.IsDevelopment())
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                }
+            });
         }
     }
 }

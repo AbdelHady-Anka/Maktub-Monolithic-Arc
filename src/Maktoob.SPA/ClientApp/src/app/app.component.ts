@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ILangFacade } from './core/facades/lang.facade';
+import { IAuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
    * translate service injected here just to ensure its running in other parts of the app
    */
 
-  constructor(private langFacade: ILangFacade) { }
+  constructor(private langFacade: ILangFacade, public authService: IAuthService) { }
 
   ngOnInit(): void { }
   title = 'Maktoob';

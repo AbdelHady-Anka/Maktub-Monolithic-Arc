@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
+import { StorageState } from '../states/storage.state';
 
 @Injectable()
 export abstract class IStorageService {
   abstract SetState(key: string, value: any): void;
   abstract GetState<T = any>(key: string): Observable<T>;
-  abstract GetItem(key: string): any;
+  abstract GetItem<T = any>(key: string): T;
   abstract SetItem(key: string, value: any): void;
   abstract RemoveItem(key: string);
   abstract Clear(): void;
 }
 
-interface StorageState {
-  [key: string]: any;
-}
 
 @Injectable()
 export class StorageService implements IStorageService {
@@ -55,18 +53,27 @@ export class StorageService implements IStorageService {
       const key = localStorage.key(index)
       try {
         this.state[key] = JSON.parse(localStorage[key]);
-      } catch (error) {
+      } catch {
         this.state[key] = localStorage[key];
       }
     }
   }
 
-  public GetItem(key: string) {
-    return localStorage[key];
+  public GetItem<T = any>(key: string): T {
+    try {
+      return JSON.parse(localStorage[key]);
+    } catch {
+      return localStorage[key];
+    }
   }
 
   public SetItem(key: string, value: any): void {
-    localStorage.setItem(key, value);
+    try {
+      localStorage[key] = JSON.stringify(value);
+    }
+    catch{
+      localStorage[key] = value;
+    }
   }
 
   public RemoveItem(key: string) {

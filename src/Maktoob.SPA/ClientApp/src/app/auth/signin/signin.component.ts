@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ISignInFacade } from '../facades/signin.facade';
 import { Observable } from 'rxjs';
-import { SignInModel } from '../models/signin.model';
+import { SignInState } from '../states/signin.state';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,9 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./signin.component.scss']
 })
 export class SignInComponent implements OnInit {
-  public vm$: Observable<SignInModel>;
+  public vm$: Observable<SignInState>;
+
+  public hidePassword: boolean = true;
 
   public signInForm: FormGroup;
 

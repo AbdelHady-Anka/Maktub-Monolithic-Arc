@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Maktoob.CrossCuttingConcerns.Error;
 using Maktoob.CrossCuttingConcerns.Options;
 using Maktoob.CrossCuttingConcerns.Result;
+using Maktoob.CrossCuttingConcerns.Security;
 using Maktoob.Domain.Entities;
 using Maktoob.Domain.Infrastructure;
 using Maktoob.Domain.Models;
@@ -47,7 +48,6 @@ namespace Maktoob.Domain.Services
 
         public async Task<GResult<TokenModel>> RefreshTokenAsync(string expiredToken, string refreshToken)
         {
-            
             ClaimsPrincipal principal = null; 
             var errors = new List<GError>();
             // Validate Jwt Token
@@ -66,23 +66,25 @@ namespace Maktoob.Domain.Services
                 };
                 var tokenHandler = new JwtSecurityTokenHandler();
                 principal = tokenHandler.ValidateToken(expiredToken, tokenValidationParameters, out var securityToken);
-                var expiryDateUnix = long.Parse(principal.FindFirst(JwtRegisteredClaimNames.Exp).Value);
-                var expiryDateTimeUtc = DateTime.UnixEpoch.AddSeconds(expiryDateUnix);
-
+                
                 if (!IsValidSecurityToken(securityToken))
                 {
                     throw new SecurityTokenException("Invalid security token");
                 }
 
+                var expiryDateUnix = long.Parse(principal.FindFirst(JwtClaimNames.Exp).Value);
+                var expiryDateTimeUtc = DateTime.UnixEpoch.AddSeconds(expiryDateUnix);
+
                 if (expiryDateTimeUtc > DateTime.UtcNow)
                 {
-                    return GResult<TokenModel>.Success(new TokenModel { Token = expiredToken, RefreshToken = refreshToken});
+                    return GResult<TokenModel>.Success(new TokenModel { AccessToken = expiredToken, RefreshToken = refreshToken});
                 }
             }
             catch (SecurityTokenException ex)
             {
                 errors.Add(ErrorDescriber.InvalidToken(ex.Message));
             }
+
             if (errors.Count > 0)
             {
                 return GResult<TokenModel>.Failed(errors.ToArray());
@@ -90,9 +92,8 @@ namespace Maktoob.Domain.Services
             // Validate Refresh Token
             else
             {
-                var id = principal?.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var userId = Guid.Parse(id);
-                var jwtId = principal?.FindFirstValue(JwtRegisteredClaimNames.Jti);
+                var userId = Guid.Parse(principal?.FindFirst(ClaimTypes.NameIdentifier).Value);
+                var jwtId = principal?.FindFirstValue(JwtClaimNames.Jti);
                 // Check if refresh token already registered for this user
                 var readUserLoginResult = await base.ReadAsync(new FindUserLogin<UserLogin>(userId, jwtId, refreshToken));
                 if (readUserLoginResult.Succeeded)
@@ -101,7 +102,7 @@ namespace Maktoob.Domain.Services
                     if(DateTime.UtcNow > userLogin.ExpiryDate)
                     {
                         await base.DeleteAsync(userLogin);
-                        return GResult<TokenModel>.Failed(ErrorDescriber.InvalidToken());
+                        return GResult<TokenModel>.Failed(ErrorDescriber.InvalidToken(""));
                     }
                     else
                     {
@@ -110,27 +111,36 @@ namespace Maktoob.Domain.Services
                         {
                             var user = readUserResult.Outcome;
                             var claims = await _userClaimsFactory.CreateAsync(user);
-                            var newJwtId = claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value;
+                            var newJwtId = claims.FirstOrDefault(c => c.Type == JwtClaimNames.Jti).Value;
                             var newToken = _jsonWebTokenCoder.Encode(claims);
+                            userLogin.JwtId = newJwtId;
                             // Check if refresh token required update
-                            if(DateTime.UtcNow > userLogin.RequiredUpdateDate)
+                            if (DateTime.UtcNow > userLogin.RequiredUpdateDate)
                             {
-                                userLogin.JwtId = newJwtId;
                                 userLogin.RefreshToken = _refreshTokenGenerator.Generate(user);
                                 userLogin.ExpiryDate = DateTime.UtcNow + _jsonWebTokenOptions.RefreshToken.Expires;
-                                userLogin.RequiredUpdateDate = DateTime.UtcNow + _jsonWebTokenOptions.RefreshToken.UpdateRequired;
-                                var updateUserLoginResult = await base.UpdateAsync(userLogin);
-                                if (!updateUserLoginResult.Succeeded)
-                                {
-                                    return GResult<TokenModel>.Failed(updateUserLoginResult.Errors.ToArray());
-                                }
+                                userLogin.RequiredUpdateDate = DateTime.UtcNow + _jsonWebTokenOptions.RefreshToken.UpdateRequired;   
                             }
-                            return GResult<TokenModel>.Success(new TokenModel { Token = newToken, RefreshToken = userLogin.RefreshToken });
+
+                            var updateUserLoginResult = await base.UpdateAsync(userLogin);
+
+                            if (!updateUserLoginResult.Succeeded)
+                            {
+                                return GResult<TokenModel>.Failed(updateUserLoginResult.Errors.ToArray());
+                            }
+                            return GResult<TokenModel>.Success(new TokenModel { AccessToken = newToken, RefreshToken = userLogin.RefreshToken });
+                        }
+                        else
+                        {
+                            return GResult<TokenModel>.Failed(ErrorDescriber.InvalidCredentials());
                         }
                     }
                 }
+                else
+                {
+                    return GResult<TokenModel>.Failed(ErrorDescriber.InvalidCredentials());
+                }
             }
-            return GResult<TokenModel>.Failed(ErrorDescriber.InvalidCredentials());
         }
 
         private bool IsValidSecurityToken(SecurityToken securityToken)
@@ -156,7 +166,7 @@ namespace Maktoob.Domain.Services
                     
                     var token = _jsonWebTokenCoder.Encode(claims);
 
-                    userLogin.JwtId = claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti).Value;
+                    userLogin.JwtId = claims.FirstOrDefault(c => c.Type == JwtClaimNames.Jti).Value;
 
                     userLogin.RefreshToken = _refreshTokenGenerator.Generate(user);
                     userLogin.ExpiryDate = DateTime.UtcNow + _jsonWebTokenOptions.RefreshToken.Expires;
@@ -165,7 +175,7 @@ namespace Maktoob.Domain.Services
                     var createUserLoginResult  = await CreateAsync(userLogin);
 
                     return createUserLoginResult.Succeeded ? 
-                        GResult<TokenModel>.Success(new TokenModel { Token = token, RefreshToken = userLogin.RefreshToken }) : 
+                        GResult<TokenModel>.Success(new TokenModel { AccessToken = token, RefreshToken = userLogin.RefreshToken }) : 
                         GResult<TokenModel>.Failed(createUserLoginResult.Errors.ToArray());
                 }
             }

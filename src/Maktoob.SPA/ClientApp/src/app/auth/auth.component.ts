@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { IStorageService } from '../core/services/storage.service';
-import { LangModel } from '../core/models/lang.mode';
+import { LangState } from '../core/states/lang.state';
 import { ILangFacade } from '../core/facades/lang.facade';
 
 @Component({
@@ -11,7 +11,7 @@ import { ILangFacade } from '../core/facades/lang.facade';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-  vm$: Observable<LangModel> = this.langService.ViewModel$;
+  vm$: Observable<LangState> = this.langService.ViewModel$;
 
   constructor(public langService: ILangFacade) { }
   ngOnInit(): void { }

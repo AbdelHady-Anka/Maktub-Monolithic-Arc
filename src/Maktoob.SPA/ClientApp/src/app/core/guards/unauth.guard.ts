@@ -1,22 +1,39 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, UrlSegment, Route, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanLoad, UrlSegment, Route, Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild } from '@angular/router';
+import { IAuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UnauthGuard implements CanLoad {
+export class UnauthGuard implements CanLoad, CanActivate, CanActivateChild {
   /**
    *
    */
-  constructor(private router: Router) { }
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    const auth = false;
-    if (auth) {
-      this.router.navigateByUrl('');
+  constructor(private router: Router, private authService: IAuthService) { }
+  async canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const isAuthorized = await this.guard(childRoute.url);
+
+    return isAuthorized;
+  }
+  private async guard(urlSegments: UrlSegment[]): Promise<boolean> {
+
+    const isAuthorized = await this.authService.IsAuthorizedAsync();
+    if (isAuthorized) {
+      this.router.navigate(['']);
     }
-    return !auth;
+    return !isAuthorized;
+  }
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const isAuthorized = await this.guard(route.url);
+
+    return isAuthorized;
+  }
+
+  async canLoad(
+    route: Route,
+    segments: UrlSegment[]): Promise<boolean> {
+    const isAuthorized = await this.guard(segments);
+
+    return isAuthorized;
   }
 }

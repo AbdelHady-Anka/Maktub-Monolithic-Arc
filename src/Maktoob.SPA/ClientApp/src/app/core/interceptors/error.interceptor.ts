@@ -4,9 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse,
-  HttpEventType
-} from '@angular/common/http';
+  HttpErrorResponse} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { GError } from '../results/error';
@@ -24,7 +22,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         case 400: // bad request
           let errors = [];
-          console.log(errorResponse.error);
           if (errorResponse.error.errors) {
             Object.entries(errorResponse.error.errors).forEach(error => {
               if (error[1] instanceof Array) {
@@ -38,13 +35,11 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (errorResponse.error.Errors) {
             errors = [...errors, ...errorResponse.error.Errors];
           }
-          console.log(errors)
           return throwError(errors);
 
         case 404: // notfound
           return throwError([{ Code: 'Notfound', Description: '' } as GError]);
         case 415: // unsuported media type
-          console.log(request.body);
           return throwError([{ Code: 'Unkown', Description: 'Unkown error occure' }])
         default:
           return throwError([{ Code: 'Unkown', Description: 'Unkown error occure' }])

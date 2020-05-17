@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { SignInModel } from '../models/signin.model';
+import { SignInState } from '../states/signin.state';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { IAuthService } from 'src/app/core/services/auth.service';
 import { SignInUserCommand } from 'src/app/core/commands/user.commnd';
 import { GError } from 'src/app/core/results/error';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 @Injectable()
 export abstract class ISignInFacade {
   /**
    * Viewmodel that resolves once all the data is ready (or updated)...
    */
-  readonly ViewModel$: Observable<SignInModel>;
+  readonly ViewModel$: Observable<SignInState>;
   /**
    * perform signup request and change state according to response
    */
@@ -27,8 +27,8 @@ export abstract class ISignInFacade {
 export class SignInFacade implements ISignInFacade {
   private command: SignInUserCommand;
 
-  private state: SignInModel = {};
-  private store = new BehaviorSubject<SignInModel>(this.state);
+  private state: SignInState = {};
+  private store = new BehaviorSubject<SignInState>(this.state);
 
   private state$ = this.store.asObservable();
 
@@ -40,7 +40,7 @@ export class SignInFacade implements ISignInFacade {
   public ViewModel$ = this.state$;
 
   // ------- Private Methods ------------------------
-  private updateState(state: SignInModel) {
+  private updateState(state: SignInState) {
     this.store.next(this.state = state);
   }
 
@@ -62,7 +62,6 @@ export class SignInFacade implements ISignInFacade {
         sub.unsubscribe();
       });
     } catch (errors) {
-      console.log(errors);
       const credentialsErrors = errors?.filter((e: GError) =>
         e.Code.endsWith('Credentials')
       );
@@ -71,7 +70,7 @@ export class SignInFacade implements ISignInFacade {
       );
 
       if (credentialsErrors?.length > 0) {
-        this.credentials.setErrors({ serverErrors: credentialsErrors });
+        this.Credentials.setErrors({ serverErrors: credentialsErrors });
       }
       if (passwordErrors?.length > 0) {
         this.password.setErrors({ serverErrors: passwordErrors })
@@ -79,23 +78,22 @@ export class SignInFacade implements ISignInFacade {
     }
   }
 
-  private credentials: FormControl;
+  private Credentials: FormControl;
   private password: FormControl;
   private subscriptions: Subscription[] = [];
 
   public BuildForm(): FormGroup {
-    this.credentials = this.formBuilder.control('',
+    this.Credentials = this.formBuilder.control('',
       [
-        Validators.required,
-        Validators.maxLength(40)
+        Validators.required
       ]
     );
 
     let sub;
 
-    sub = this.credentials.statusChanges.subscribe(status => {
+    sub = this.Credentials.statusChanges.subscribe(status => {
       if (status == 'INVALID') {
-        const errors = this.extractErrors(this.credentials);
+        const errors = this.extractErrors(this.Credentials);
         this.updateState({ ...this.state, CredentialsErrors: errors })
       }
     })
@@ -103,9 +101,7 @@ export class SignInFacade implements ISignInFacade {
 
     this.password = this.formBuilder.control('',
       [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(128)
+        Validators.required
       ]
     );
 
@@ -118,11 +114,18 @@ export class SignInFacade implements ISignInFacade {
     this.subscriptions = [...this.subscriptions, sub];
 
     const signInForm = this.formBuilder.group({
-      credentials: this.credentials,
-      password: this.password
+      Credentials: this.Credentials,
+      Password: this.password
     });
 
     sub = signInForm.valueChanges.pipe(
+      map((value: { Credentials: string, Password: string }) => {
+        if (!Validators.email(this.Credentials)) { // no validation errors 
+          return { Credentials: value.Credentials, Password: value.Password, EmailCredentials: true } as SignInUserCommand
+        } else {
+          return { Credentials: value.Credentials, Password: value.Password, EmailCredentials: false } as SignInUserCommand
+        }
+      }),
       finalize(() => { this.command = null }) // delete data
     ).subscribe(value => {
       this.command = value;

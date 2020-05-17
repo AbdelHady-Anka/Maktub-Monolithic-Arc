@@ -92,6 +92,9 @@ namespace Maktoob.Persistance.Migrations
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("JwtId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("OperatingSystem")
                         .HasColumnType("nvarchar(max)");
 

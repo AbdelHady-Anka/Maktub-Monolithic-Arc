@@ -11,7 +11,7 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   hidePassword: boolean = true;
   
-  constructor(public signUpFacade: ISignUpFacade) { }
+  constructor(private signUpFacade: ISignUpFacade) { }
 
   vm$ = this.signUpFacade.ViewModel$;
 

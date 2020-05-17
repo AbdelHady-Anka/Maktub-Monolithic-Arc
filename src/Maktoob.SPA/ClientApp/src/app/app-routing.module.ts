@@ -10,7 +10,9 @@ const routes: Routes = [
       import('./auth/auth.module').then(
         (m) => m.AuthModule
       ),
-    canLoad: [UnauthGuard]
+    canLoad: [UnauthGuard],
+    canActivate: [UnauthGuard],
+    canActivateChild: [UnauthGuard]
   },
   {
     path: 'error',
@@ -25,6 +27,8 @@ const routes: Routes = [
         (m) => m.RootModule
       ),
     canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard]
   },
   {
     path: '**',

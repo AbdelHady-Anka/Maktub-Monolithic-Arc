@@ -30,7 +30,7 @@ namespace Maktoob.Domain.Validators
             var errors = new List<GError>();
             try
             {
-                var principal = _tokenHandler.ValidateToken(tokenModel.Token, _options.TokenValidationParameters, out var securityToken);
+                var principal = _tokenHandler.ValidateToken(tokenModel.AccessToken, _options.TokenValidationParameters, out var securityToken);
                 
                 if (!IsValidSecurityToken(securityToken))
                 {

@@ -55,6 +55,5 @@ export class JwtClaimNames {
 export interface TokenModel {
     AccessToken: string;
     RefreshToken: string;
-    Claims: { [index: string]: any };
 }
 

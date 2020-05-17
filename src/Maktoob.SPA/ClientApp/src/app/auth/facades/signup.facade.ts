@@ -4,8 +4,10 @@ import { SignUpUserCommand } from 'src/app/core/commands/user.commnd';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { GError } from 'src/app/core/results/error';
 import { IAuthService } from 'src/app/core/services/auth.service';
-import { SignUpModel } from '../models/signup.mode';
+import { SignUpState } from '../states/signup.state';
 import { finalize } from 'rxjs/operators';
+import { FormValidators } from 'src/app/core/validators/FormValidators';
+
 
 
 
@@ -14,7 +16,7 @@ export abstract class ISignUpFacade {
   /**
   * Viewmodel that resolves once all the data is ready (or updated)...
   */
-  readonly ViewModel$: Observable<SignUpModel>;
+  readonly ViewModel$: Observable<SignUpState>;
   /**
    * perform signup request and change state according to response
    */
@@ -31,15 +33,17 @@ export class SignUpFacade implements ISignUpFacade {
 
   private command: SignUpUserCommand;
 
-  private state: SignUpModel = {};
-  private store = new BehaviorSubject<SignUpModel>(this.state);
+  private state: SignUpState = {};
+  private store = new BehaviorSubject<SignUpState>(this.state);
 
   private state$ = this.store.asObservable();
 
   public ViewModel$ = this.state$;
 
 
-  private username: FormControl;
+  private userName: FormControl;
+  private firstName: FormControl;
+  private lastName: FormControl;
   private password: FormControl;
   private email: FormControl;
 
@@ -53,7 +57,7 @@ export class SignUpFacade implements ISignUpFacade {
   // ------- Private Methods ------------------------
 
   /** Update internal state cache and emit from store... */
-  private updateState(state: SignUpModel) {
+  private updateState(state: SignUpState) {
     this.store.next(this.state = state);
   }
 
@@ -77,16 +81,23 @@ export class SignUpFacade implements ISignUpFacade {
         sub.unsubscribe();
       })
     } catch (errors) {
-      console.log(errors);
       const emailErrors = errors?.filter((e: GError) => e.Code.endsWith('Email'));
-      const usernameErrors = errors?.filter((e: GError) => e.Code.endsWith('UserName'));
+      const userNameErrors = errors?.filter((e: GError) => e.Code.endsWith('UserName'));
+      const firstNameErrors = errors?.filter((e: GError) => e.Code.endsWith('FirstName'));
+      const lastNameErrors = errors?.filter((e: GError) => e.Code.endsWith('LastName'));
       const passwordErrors = errors?.filter((e: GError) => e.Code.endsWith('Password'));
 
       if (emailErrors?.length > 0) {
         this.email.setErrors({ serverErrors: emailErrors });
       }
-      if (usernameErrors?.length > 0) {
-        this.username.setErrors({ serverErrors: usernameErrors });
+      if (userNameErrors?.length > 0) {
+        this.userName.setErrors({ serverErrors: userNameErrors });
+      }
+      if (firstNameErrors?.length > 0) {
+        this.firstName.setErrors({ serverErrors: firstNameErrors });
+      }
+      if (lastNameErrors?.length > 0) {
+        this.lastName.setErrors({ serverErrors: lastNameErrors });
       }
       if (passwordErrors?.length > 0) {
         this.password.setErrors({ serverErrors: passwordErrors })
@@ -95,43 +106,76 @@ export class SignUpFacade implements ISignUpFacade {
   }
 
 
-  private subscriptions: Subscription[];
+  private subscriptions: Subscription[] = [];
 
   public BuildForm(): FormGroup {
     let sub;
 
-    this.username = this.formBuilder.control('',
+    // start username field
+    this.userName = this.formBuilder.control('',
       [
         Validators.required,
-        Validators.maxLength(40)
+        FormValidators.StartsWithPeriod,
+        Validators.pattern(/^[A-Za-z0-9\.]*$/),
+        Validators.maxLength(30),
+        Validators.minLength(6),
       ]
     );
 
+    sub = this.userName.statusChanges.subscribe(status => {
+      if (status === 'INVALID') {
+        const errors = this.extractErrors(this.userName);
+        this.updateState({ ...this.state, UserNameErrors: errors })
+      }
+    });
+    this.subscriptions = [...this.subscriptions, sub];
+    // end username field
+
+
+    // start firstname field
+    this.firstName = this.formBuilder.control('',
+      [
+        Validators.required,
+        Validators.maxLength(40),
+        FormValidators.PersonalName
+      ],
+    );
+
+    sub = this.firstName.statusChanges.subscribe(status => {
+      if (status === 'INVALID') {
+        const errors = this.extractErrors(this.firstName);
+        this.updateState({ ...this.state, FirstNameErrors: errors })
+      }
+    });
+    this.subscriptions = [...this.subscriptions, sub];
+    // end firstname field
+
+
+    // start lastname field
+    this.lastName = this.formBuilder.control('',
+      [
+        Validators.required,
+        Validators.maxLength(40),
+        FormValidators.PersonalName
+      ]
+    );
+    sub = this.lastName.statusChanges.subscribe(status => {
+      if (status === 'INVALID') {
+        const errors = this.extractErrors(this.lastName);
+        this.updateState({ ...this.state, LastNameErrors: errors })
+      }
+    });
+    this.subscriptions = [...this.subscriptions, sub];
+    // end lastname field
+
+
+    // start email field
     this.email = this.formBuilder.control('',
       [
         Validators.required,
         Validators.email
       ]
     );
-
-
-    this.password = this.formBuilder.control('',
-      [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(128)
-      ]
-    );
-
-    sub = this.username.statusChanges.subscribe(status => {
-      if (status === 'INVALID') {
-        const errors = this.extractErrors(this.username);
-        this.updateState({ ...this.state, UsernameErrors: errors })
-      }
-    });
-    this.subscriptions = [...this.subscriptions, sub];
-
-
     sub = this.email.statusChanges.subscribe(status => {
       if (status === 'INVALID') {
         const errors = this.extractErrors(this.email);
@@ -139,8 +183,20 @@ export class SignUpFacade implements ISignUpFacade {
       }
     });
     this.subscriptions = [...this.subscriptions, sub];
+    // end email field
 
 
+    // start password field
+    this.password = this.formBuilder.control('',
+      [
+        Validators.required,
+        FormValidators.PreventWhiteSpacesAtTheBeginningOrTheEnd,
+        FormValidators.PreventNonEnglishLetters,
+        Validators.minLength(8),
+        Validators.maxLength(100),
+        Validators.pattern(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9 !"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]+$/),
+      ]
+    );
     sub = this.password.statusChanges.subscribe(status => {
       if (status === 'INVALID') {
         const errors = this.extractErrors(this.password);
@@ -148,12 +204,16 @@ export class SignUpFacade implements ISignUpFacade {
       }
     });
     this.subscriptions = [...this.subscriptions, sub];
+    // end password field
 
 
+    // build form group
     const signUpForm = this.formBuilder.group({
-      username: this.username,
-      email: this.email,
-      password: this.password
+      UserName: this.userName,
+      Email: this.email,
+      Password: this.password,
+      FirstName: this.firstName,
+      LastName: this.lastName
     });
 
     sub = signUpForm.valueChanges.pipe(

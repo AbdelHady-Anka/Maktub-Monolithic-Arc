@@ -12,11 +12,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AuthModule } from './auth/auth.module';
 import { RootModule } from './root/root.module';
 import { ErrorModule } from './error/error.module';
-import { HttpInterceptorProviders } from './core/interceptors';
+import { HttpInterceptorProviders } from './core/interceptors/interceptors';
 import { IStorageService, StorageService } from './core/services/storage.service';
 import { LangFacade, ILangFacade } from './core/facades/lang.facade';
-import { ServiceProviders } from './core/services';
-import { IAuthFacade, AuthFacade } from './core/facades/auth.facade';
+import { ServiceProviders } from './core/services/services';
+import { CoreModule } from './core/core.module';
 
 
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -44,14 +44,11 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
             deps: [HttpClient]
          }
       }),
+      CoreModule,
       ErrorModule,
    ],
    providers: [
-      { provide: ILangFacade, useClass: LangFacade },
-      { provide: IStorageService, useClass: StorageService },
-      { provide: IAuthFacade, useClass: AuthFacade },
-      HttpInterceptorProviders,
-      ServiceProviders
+      { provide: ILangFacade, useClass: LangFacade }
    ],
    bootstrap: [
       AppComponent
